@@ -1,21 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useHistory, Redirect } from "react-router-dom";
 
-function Login({ setUserInfo }) {
+function Login() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  let history = useHistory();
+
+  useEffect(() => {
+    const loggedInUserId = localStorage.getItem("userId");
+    if (loggedInUserId) {
+      history.push("/");
+    }
+    return () => {};
+  }, []);
 
   function postAxios() {
+    const user = { username, password };
     axios
-      .post("http://localhost:3000/login", {
-        username,
-        password,
-      })
+      .post("http://localhost:3000/login", user)
       .then((response) => {
-        console.log(response.data.data);
-        // när jag fått något här ska jag spara _id i localStorage
-        // OCH redirecta till /something
-        setUserInfo(response.data.data);
+        localStorage.setItem("userId", response.data.userId);
+        history.push("/");
       })
       .catch((error) => {
         console.log(error);

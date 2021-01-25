@@ -25,9 +25,19 @@ app.post("/login", async (req, res) => {
   console.log("data", data);
 
   if (data.password === user.password) {
-    res.status(201).send({ data });
+    res.status(201).send({ userId: data._id });
   } else {
     res.status(400).end("Wrong password");
+  }
+});
+
+app.get("/user/:userId", async (req, res) => {
+  let userId = req.params.userId;
+  const data = await db.getUser(userId);
+  if (data) {
+    res.status(200).send(data);
+  } else {
+    res.status(500).end();
   }
 });
 
@@ -89,10 +99,6 @@ app.put("/addBookRead/:bookclubId", async (req, res) => {
   };
   const data = await db.updateBookclubBooksRead(newBook, bookclubId);
   res.status(200).send("Sucess");
-});
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
 });
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));

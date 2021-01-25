@@ -16,12 +16,22 @@ let db = client.db(DBname);
 /* Funktionerna ska göras här, som kallas på med anrop från server/index.js */
 
 async function loginUser(user) {
-  console.log("inside getUser");
+  console.log("inside loginUser");
   try {
     const result = await db
       .collection("usersCollection")
       .findOne({ username: user.username });
+    return result;
+  } catch {
+    throw error;
+  }
+}
 
+async function getUser(userId) {
+  try {
+    const result = await db
+      .collection("usersCollection")
+      .findOne({ _id: ObjectId(userId) });
     return result;
   } catch {
     throw error;
@@ -83,15 +93,12 @@ async function updateBookclubBooksRead(newBook, bookclubId) {
     throw error;
   }
 }
-
+module.exports.getUser = getUser;
 module.exports.loginUser = loginUser;
 module.exports.getBookclubs = getBookclubs;
 module.exports.getBookclub = getBookclub;
 module.exports.updateBookclubBooksToRead = updateBookclubBooksToRead;
 module.exports.updateBookclubBooksRead = updateBookclubBooksRead;
-
-
-
 
 //module.exports.getAllBooksInOneBookclub = getAllBooksInOneBookclub;
 //module.exports.postBookToBookClub = postBookToBookClub;
