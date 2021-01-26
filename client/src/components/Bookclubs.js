@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useHistory, Redirect, Link } from "react-router-dom";
-import TabBar from "./TabBar";
 
-function Profile({ getUserAxios, userInfo }) {
+function Bookclubs({ getUserAxios, userInfo }) {
   let history = useHistory();
 
   useEffect(() => {
@@ -12,6 +10,10 @@ function Profile({ getUserAxios, userInfo }) {
       history.push("/login");
     } else {
       getUserAxios(loggedInUserId);
+      if (userInfo.bookclubs.length === 1) {
+        let id = userInfo.bookclubs[0].bookclub_id;
+        history.push("/bookclubs/" + id);
+      }
     }
     return () => {};
   }, []);
@@ -27,29 +29,16 @@ function Profile({ getUserAxios, userInfo }) {
       );
     });
   }
-
   return (
     <>
-      <p>Profile {userInfo.username}</p>
       <div>
         <ul>
           <strong>Bookclubs</strong>
           {mappedBookclubs}
         </ul>
       </div>
-
-      <button
-        onClick={() => {
-          localStorage.removeItem("userId");
-          history.push("/login");
-        }}
-      >
-        Logout
-      </button>
     </>
   );
 }
 
-export default Profile;
-
-
+export default Bookclubs;

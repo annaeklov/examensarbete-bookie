@@ -5,12 +5,13 @@ import { useHistory, Redirect } from "react-router-dom";
 function Login() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   let history = useHistory();
 
   useEffect(() => {
     const loggedInUserId = localStorage.getItem("userId");
     if (loggedInUserId) {
-      history.push("/");
+      history.push("/user");
     }
     return () => {};
   }, []);
@@ -21,10 +22,13 @@ function Login() {
       .post("http://localhost:3000/login", user)
       .then((response) => {
         localStorage.setItem("userId", response.data.userId);
-        history.push("/");
+        history.push("/user");
       })
       .catch((error) => {
         console.log(error);
+        setErrorMsg("Wrong");
+        setUsername("");
+        setPassword("");
       });
   }
 
@@ -32,7 +36,7 @@ function Login() {
     e.preventDefault();
 
     if (username.trim() === "" || password.trim() === "") {
-      return console.log("tomma inputs");
+      return setErrorMsg("Empty");
     }
     postAxios();
   }
@@ -67,6 +71,8 @@ function Login() {
         />
         <input type="submit" value="Logga in" />
       </form>
+      {errorMsg === "Empty" && <p>Input kan inte vara tomt</p>}
+      {errorMsg === "Wrong" && <p>Användarnamn eller lösen är fel</p>}
     </div>
   );
 }
