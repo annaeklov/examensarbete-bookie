@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useHistory, Redirect, NavLink, useParams } from "react-router-dom";
+import RenderBooks from "./RenderBooks";
 
 function Bookclub({ userInfo }) {
   const [bookClubInfo, setBookClubInfo] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
-    if (userInfo.bookclubs) {
-      getUserBookclub();
-    }
+    getUserBookclub();
     return () => {};
   }, []);
 
@@ -42,43 +41,10 @@ function Bookclub({ userInfo }) {
       </p>
       <p>Medlemmar: {bookClubInfo.users && mappedMembers}</p>
 
-      <Tabs>
-        <button type="button" className="readBtn" active>
-          READ
-        </button>
-        <button type="button" className="toReadBtn">
-          TO READ
-        </button>
-        <button type="button" className="currentlyBtn">
-          CURRENTLY
-        </button>
-      </Tabs>
-      <section></section>
+      <RenderBooks bookClubInfo={bookClubInfo}/>
     </>
   );
 }
 
 export default Bookclub;
 
-const Tabs = styled.div`
-  width: 100%;
-  height: 20px;
-  border-top: 1px solid lightgrey;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px 0 0 0;
-
-  button {
-    border: none;
-    color: #262824;
-    background-color: transparent;
-    :active,
-    :focus {
-      border: none;
-      border-bottom: 2px solid #262824;
-      outline: none;
-      font-weight: bold;
-    }
-  }
-`;
