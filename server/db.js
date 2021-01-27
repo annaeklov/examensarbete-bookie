@@ -16,7 +16,6 @@ let db = client.db(DBname);
 /* Funktionerna ska göras här, som kallas på med anrop från server/index.js */
 
 async function loginUser(user) {
-  console.log("inside loginUser");
   try {
     const result = await db
       .collection("usersCollection")

@@ -22,12 +22,16 @@ app.post("/login", async (req, res) => {
     res.status(400).end();
   }
   const data = await db.loginUser(user);
-  console.log("data", data);
-
-  if (data.password === user.password) {
-    res.status(201).send({ userId: data._id });
-  } else {
-    res.status(400).end("Wrong password");
+  if (data.username === user.username) {
+    if (data.password === user.password) {
+      res.status(201).send({ userId: data._id });
+    } else {
+      console.log("res", res);
+      res.status(400).end("Wrong password");
+    }
+  } else if (data.username !== user.username) {
+    console.log("res", res);
+    res.status(400).end("Wrong username");
   }
 });
 
