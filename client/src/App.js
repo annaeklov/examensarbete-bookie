@@ -16,17 +16,6 @@ import TabBar from "./components/TabBar";
 import Bookclubs from "./components/Bookclubs";
 import Bookclub from "./components/Bookclub";
 
-
-const AppDiv = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  min-height: 100vh;
-  background-color: #E3E4DB;
-  position: absolute;
-`;
-
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -35,6 +24,7 @@ function App() {
     const loggedInUserId = localStorage.getItem("userId");
     return () => {};
   }, []);
+  
 
   function getUserAxios(loggedInUserId) {
     axios
@@ -92,3 +82,16 @@ function App() {
 }
 
 export default App;
+
+const AppDiv = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  background-color: #E3E4DB;
+  position: absolute;
+  
+`;
+

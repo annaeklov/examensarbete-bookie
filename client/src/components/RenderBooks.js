@@ -3,46 +3,103 @@ import axios from "axios";
 import styled from "styled-components";
 import { useHistory, Redirect, NavLink, useParams } from "react-router-dom";
 
-function RenderBooks({ bookClubInfo }) {
+function RenderBooks({ bookClubInfo, userInfo }) {
   const [selectedTab, setSelectedTab] = useState("read");
+  const [active, setActive] = useState("read");
 
   let mappedBooks;
 
-  if (bookClubInfo.booksRead) {
-    if (selectedTab === "read") {
-      mappedBooks = bookClubInfo.booksRead.map((readBook, x) => {
-        return <Img src={readBook.coverSrc} key={x} alt={readBook.title} />;
-      });
+  function onClickATag(bookId) {
+    console.log("klick", bookId);
+  }
+
+  if (userInfo) {
+    if (userInfo.booksRead) {
+      if (selectedTab === "read") {
+        mappedBooks = userInfo.booksRead.map((book) => {
+          return (
+            <ATag onClick={() => onClickATag(book._id)}>
+              <Img src={book.coverSrc} key={book._id} alt={book.title} />
+            </ATag>
+          );
+        });
+      }
+    }
+    if (userInfo.booksToRead) {
+      if (selectedTab === "toRead") {
+        mappedBooks = userInfo.booksToRead.map((book) => {
+          return (
+            <ATag onClick={() => onClickATag(book._id)}>
+              <Img src={book.coverSrc} key={book._id} alt={book.title} />
+            </ATag>
+          );
+        });
+      }
     }
   }
-  if (bookClubInfo.booksToRead) {
-    if (selectedTab === "toRead") {
-      mappedBooks = bookClubInfo.booksToRead.map((readToBook, x) => {
-        return <Img src={readToBook.coverSrc} key={x} alt={readToBook.title} />;
-      });
+
+  if (bookClubInfo) {
+    if (bookClubInfo.booksRead) {
+      if (selectedTab === "read") {
+        mappedBooks = bookClubInfo.booksRead.map((book) => {
+          return (
+            <ATag onClick={() => onClickATag(book.id)}>
+              <Img src={book.coverSrc} key={book.id} alt={book.title} />
+            </ATag>
+          );
+        });
+      }
     }
-  }
-  if (bookClubInfo.currentlyReading) {
-    if (selectedTab === "currently") {
-      mappedBooks = <Img src={bookClubInfo.currentlyReading.coverSrc} alt={bookClubInfo.currentlyReading.title} />;
+    if (bookClubInfo.booksToRead) {
+      if (selectedTab === "toRead") {
+        mappedBooks = bookClubInfo.booksToRead.map((book) => {
+          return (
+            <ATag onClick={() => onClickATag(book.id)}>
+              <Img src={book.coverSrc} key={book.id} alt={book.title} />
+            </ATag>
+          );
+        });
+      }
+    }
+    if (bookClubInfo.currentlyReading) {
+      if (selectedTab === "currently") {
+        mappedBooks = (
+          <ATag onClick={() => onClickATag(bookClubInfo.currentlyReading.id)}>
+            <Img
+              src={bookClubInfo.currentlyReading.coverSrc}
+              alt={bookClubInfo.currentlyReading.title}
+            />
+          </ATag>
+        );
+      }
     }
   }
 
   function changeTab(e) {
     setSelectedTab(e.target.value);
+    setActive(e.target.value);
   }
   return (
     <>
       <Tabs>
-        <button value="read" onClick={changeTab} autoFocus>
+        <Button
+          active={active === "read"}
+          value="read"
+          onClick={changeTab}
+          autoFocus
+        >
           READ
-        </button>
-        <button value="toRead" onClick={changeTab}>
+        </Button>
+        <Button active={active === "toRead"} value="toRead" onClick={changeTab}>
           TO READ
-        </button>
-        <button value="currently" onClick={changeTab}>
+        </Button>
+        <Button
+          active={active === "currently"}
+          value="currently"
+          onClick={changeTab}
+        >
           CURRENTLY
-        </button>
+        </Button>
       </Tabs>
       <BooksSection>{mappedBooks}</BooksSection>
     </>
@@ -53,12 +110,16 @@ export default RenderBooks;
 
 const BooksSection = styled.section`
   box-sizing: border-box;
-
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 10px 5px 0 5px;
+  justify-content: unset;
+  padding: 5px 5px 100px 5px;
+  overflow: auto;
+`;
+
+const ATag = styled.a`
+  display: contents;
 `;
 
 const Img = styled.img`
@@ -75,18 +136,14 @@ const Tabs = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 10px 0 0 0;
+  padding: 10px 0 10px 0;
+`;
 
-  button {
-    border: none;
-    color: #262824;
-    background-color: transparent;
-    :active,
-    :focus {
-      border: none;
-      border-bottom: 2px solid #262824;
-      outline: none;
-      font-weight: bold;
-    }
-  }
+const Button = styled.button`
+  border: none;
+  color: #262824;
+  background-color: transparent;
+  border-bottom: ${(props) => (props.active ? "2px solid #262824" : "")};
+  outline: ${(props) => (props.active ? "none" : "")};
+  font-weight: ${(props) => (props.active ? "bold" : "")};
 `;

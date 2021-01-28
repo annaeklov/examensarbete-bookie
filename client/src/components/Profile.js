@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, Redirect, Link } from "react-router-dom";
 import TabBar from "./TabBar";
+import RenderBooks from "./RenderBooks";
 
 function Profile({ getUserAxios, userInfo }) {
   let history = useHistory();
@@ -31,13 +32,6 @@ function Profile({ getUserAxios, userInfo }) {
   return (
     <>
       <p>Profile {userInfo.username}</p>
-      <div>
-        <ul>
-          <strong>Bookclubs</strong>
-          {mappedBookclubs}
-        </ul>
-      </div>
-
       <button
         onClick={() => {
           localStorage.removeItem("userId");
@@ -46,10 +40,16 @@ function Profile({ getUserAxios, userInfo }) {
       >
         Logout
       </button>
+      <div>
+        <ul>
+          <strong>Your bookclubs</strong>
+          {mappedBookclubs}
+        </ul>
+      </div>
+
+      <RenderBooks userInfo={userInfo} />
     </>
   );
 }
 
 export default Profile;
-
-
