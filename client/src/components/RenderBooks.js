@@ -2,23 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useHistory, Redirect, NavLink, useParams } from "react-router-dom";
+import Modal from "./Modal";
 
 function RenderBooks({ bookClubInfo, userInfo }) {
   const [selectedTab, setSelectedTab] = useState("read");
   const [active, setActive] = useState("read");
+  const [showModal, setShowModal] = useState(false);
+  const [clickedBook, setClickedBook] = useState({});
 
   let mappedBooks;
-
-  function onClickATag(bookId) {
-    console.log("klick", bookId);
-  }
 
   if (userInfo) {
     if (userInfo.booksRead) {
       if (selectedTab === "read") {
         mappedBooks = userInfo.booksRead.map((book) => {
           return (
-            <ATag onClick={() => onClickATag(book._id)}>
+            <ATag onClick={() => onClickATag(book)}>
               <Img src={book.coverSrc} key={book._id} alt={book.title} />
             </ATag>
           );
@@ -29,7 +28,7 @@ function RenderBooks({ bookClubInfo, userInfo }) {
       if (selectedTab === "toRead") {
         mappedBooks = userInfo.booksToRead.map((book) => {
           return (
-            <ATag onClick={() => onClickATag(book._id)}>
+            <ATag onClick={() => onClickATag(book)}>
               <Img src={book.coverSrc} key={book._id} alt={book.title} />
             </ATag>
           );
@@ -43,7 +42,7 @@ function RenderBooks({ bookClubInfo, userInfo }) {
       if (selectedTab === "read") {
         mappedBooks = bookClubInfo.booksRead.map((book) => {
           return (
-            <ATag onClick={() => onClickATag(book.id)}>
+            <ATag onClick={() => onClickATag(book)}>
               <Img src={book.coverSrc} key={book.id} alt={book.title} />
             </ATag>
           );
@@ -54,7 +53,7 @@ function RenderBooks({ bookClubInfo, userInfo }) {
       if (selectedTab === "toRead") {
         mappedBooks = bookClubInfo.booksToRead.map((book) => {
           return (
-            <ATag onClick={() => onClickATag(book.id)}>
+            <ATag onClick={() => onClickATag(book)}>
               <Img src={book.coverSrc} key={book.id} alt={book.title} />
             </ATag>
           );
@@ -64,7 +63,7 @@ function RenderBooks({ bookClubInfo, userInfo }) {
     if (bookClubInfo.currentlyReading) {
       if (selectedTab === "currently") {
         mappedBooks = (
-          <ATag onClick={() => onClickATag(bookClubInfo.currentlyReading.id)}>
+          <ATag onClick={() => onClickATag(bookClubInfo.currentlyReading)}>
             <Img
               src={bookClubInfo.currentlyReading.coverSrc}
               alt={bookClubInfo.currentlyReading.title}
@@ -75,12 +74,26 @@ function RenderBooks({ bookClubInfo, userInfo }) {
     }
   }
 
+  console.log(showModal);
+
   function changeTab(e) {
     setSelectedTab(e.target.value);
     setActive(e.target.value);
   }
+  function onClickATag(bookInfo) {
+    console.log("klick", bookInfo);
+    setShowModal(true);
+    setClickedBook(bookInfo);
+  }
   return (
     <>
+      {showModal && (
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          clickedBook={clickedBook}
+        />
+      )}
       <Tabs>
         <Button
           active={active === "read"}
@@ -116,6 +129,7 @@ const BooksSection = styled.section`
   justify-content: unset;
   padding: 5px 5px 100px 5px;
   overflow: auto;
+  height: 80vh;
 `;
 
 const ATag = styled.a`
@@ -125,7 +139,7 @@ const ATag = styled.a`
 const Img = styled.img`
   box-sizing: border-box;
   width: 32%;
-  height: auto;
+  height: 180px;
   padding: 10px 4px 4px 4px;
 `;
 
