@@ -15,10 +15,10 @@ function RenderBooks({ bookClubInfo, userInfo }) {
   if (userInfo) {
     if (userInfo.booksRead) {
       if (selectedTab === "read") {
-        mappedBooks = userInfo.booksRead.map((book) => {
+        mappedBooks = userInfo.booksRead.map((book, x) => {
           return (
-            <ATag onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc} key={book._id} alt={book.title} />
+            <ATag key={x} onClick={() => onClickATag(book)}>
+              <Img src={book.coverSrc}  alt={book.title} />
             </ATag>
           );
         });
@@ -26,10 +26,10 @@ function RenderBooks({ bookClubInfo, userInfo }) {
     }
     if (userInfo.booksToRead) {
       if (selectedTab === "toRead") {
-        mappedBooks = userInfo.booksToRead.map((book) => {
+        mappedBooks = userInfo.booksToRead.map((book, x) => {
           return (
-            <ATag onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc} key={book._id} alt={book.title} />
+            <ATag key={x} onClick={() => onClickATag(book)}>
+              <Img src={book.coverSrc} alt={book.title} />
             </ATag>
           );
         });
@@ -40,10 +40,10 @@ function RenderBooks({ bookClubInfo, userInfo }) {
   if (bookClubInfo) {
     if (bookClubInfo.booksRead) {
       if (selectedTab === "read") {
-        mappedBooks = bookClubInfo.booksRead.map((book) => {
+        mappedBooks = bookClubInfo.booksRead.map((book,x) => {
           return (
-            <ATag onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc} key={book.id} alt={book.title} />
+            <ATag key={x} onClick={() => onClickATag(book)}>
+              <Img src={book.coverSrc} alt={book.title} />
             </ATag>
           );
         });
@@ -62,14 +62,13 @@ function RenderBooks({ bookClubInfo, userInfo }) {
     }
     if (bookClubInfo.currentlyReading) {
       if (selectedTab === "currently") {
-        mappedBooks = (
-          <ATag onClick={() => onClickATag(bookClubInfo.currentlyReading)}>
-            <Img
-              src={bookClubInfo.currentlyReading.coverSrc}
-              alt={bookClubInfo.currentlyReading.title}
-            />
-          </ATag>
-        );
+        mappedBooks = bookClubInfo.currentlyReading.map((book,x) => {
+          return (
+            <ATag key={x} onClick={() => onClickATag(book)}>
+              <Img src={book.coverSrc} alt={book.title} />
+            </ATag>
+          );
+        });
       }
     }
   }

@@ -13,8 +13,8 @@ function TabBar() {
         activeStyle={activeStyle}
       >
         <HiOutlineUser />
-        <span>profil</span>
-      </NavLink>
+{/*         <span>profil</span>
+ */}      </NavLink>
       <NavLink
         to="/bookclubs"
         activeClassName="selected"
@@ -22,8 +22,8 @@ function TabBar() {
         activeStyle={activeStyle}
       >
         <HiOutlineUsers />
-        <span>bokklubb</span>
-      </NavLink>
+{/*         <span>bokklubb</span>
+ */}      </NavLink>
       <NavLink
         to="/search"
         activeClassName="selected"
@@ -31,8 +31,8 @@ function TabBar() {
         activeStyle={activeStyle}
       >
         <HiSearch />
-        <span>sök</span>
-      </NavLink>
+{/*         <span>sök</span>
+ */}      </NavLink>
     </TabBarDiv>
   );
 }

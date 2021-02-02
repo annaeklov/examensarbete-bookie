@@ -21,6 +21,7 @@ function Bookclubs({ getUserAxios, userInfo }) {
   let mappedBookclubs;
 
   if (userInfo.bookclubs) {
+    console.log(userInfo.bookclubs);
     mappedBookclubs = userInfo.bookclubs.map((club) => {
       return (
         <li key={club.bookclub_id}>
@@ -36,6 +37,7 @@ function Bookclubs({ getUserAxios, userInfo }) {
           <strong>Bookclubs</strong>
           {mappedBookclubs}
         </ul>
+        <p>"(Hi, citat här)"</p>
       </div>
     </>
   );

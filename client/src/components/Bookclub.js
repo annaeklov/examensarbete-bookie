@@ -42,9 +42,9 @@ function Bookclub({ userInfo }) {
   if (bookClubInfo.users) {
     mappedMembers = bookClubInfo.users.map((member) => {
       return (
-        <div>
+        <div key={member.user_id}>
           <img src={avatars[randomAvatar()]} />
-          <p key={member.user_id}>{member.name}</p>
+          <p>{member.name}</p>
         </div>
       );
     });
@@ -71,15 +71,17 @@ const BookClubInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 200px;
+  height: 23%;
   h1 {
     font-weight: 900;
+    text-align: center;
+    margin: 25px 0 15px 0;
   }
   .meeting {
     margin: 0;
     position: absolute;
-    top: 55px;
-    right: 132px;
+    top: 3px;
+    right: 2px;
     font-size: 13px;
     font-weight: 300;
   }
