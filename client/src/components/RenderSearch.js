@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BiBookAdd } from "react-icons/bi";
+import AddModal from "./AddModal";
 
-function RenderSearch({ booksArray }) {
+function RenderSearch({ booksArray, userInfo }) {
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [clickedBookToAdd, setClickedBookToAdd] = useState({});
+
   let mappedSearchedBooks;
 
   if (booksArray && booksArray.length >= 1) {
     mappedSearchedBooks = booksArray.map((searchedBook, x) => {
       return (
         <div key={searchedBook.id}>
-          {searchedBook.volumeInfo.imageLinks && (
+          {searchedBook.volumeInfo.imageLinks ? (
             <img
               src={searchedBook.volumeInfo.imageLinks.smallThumbnail}
               alt={searchedBook.volumeInfo.title}
             />
+          ) : (
+            <img
+              src={
+                "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+              }
+              alt={searchedBook.volumeInfo.title}
+            />
           )}
           <p>{searchedBook.volumeInfo.title} </p>
-          {searchedBook.volumeInfo.authors && (
+          {searchedBook.volumeInfo.authors ? (
             <ul>
               {searchedBook.volumeInfo.authors.map((author, x) => {
                 return (
@@ -26,10 +37,12 @@ function RenderSearch({ booksArray }) {
                 );
               })}
             </ul>
+          ) : (
+            <span>(no author found)</span>
           )}
           <BiBookAdd
             onClick={() => {
-              onClickAddBook(searchedBook.id);
+              onClickAddBook(searchedBook);
             }}
           />
         </div>
@@ -37,14 +50,26 @@ function RenderSearch({ booksArray }) {
     });
   }
 
-  function onClickAddBook(searchedBookId) {
-    console.log(searchedBookId);
+  function onClickAddBook(searchedBook) {
+    console.log(searchedBook);
+    setShowAddModal(true);
+    setClickedBookToAdd(searchedBook);
   }
+  console.log(showAddModal);
+
   return (
-    <Section>
+    <>
+      {showAddModal && (
+        <AddModal
+          showAddModal={showAddModal}
+          setShowAddModal={setShowAddModal}
+          clickedBookToAdd={clickedBookToAdd}
+          userInfo={userInfo}
+        />
+      )}
       {booksArray && booksArray.length >= 1 && <p>Results</p>}
-      {mappedSearchedBooks}
-    </Section>
+      <Section>{mappedSearchedBooks}</Section>
+    </>
   );
 }
 export default RenderSearch;
@@ -66,8 +91,8 @@ const Section = styled.section`
     width: 100%;
 
     img {
-      width: 12%;
-      height: 60px;
+      width: 7%;
+      height: 35px;
       margin: 3px;
     }
     p {
@@ -83,6 +108,7 @@ const Section = styled.section`
         span {
           position: relative;
           left: -6px;
+          font-weight: ;
         }
       }
     }

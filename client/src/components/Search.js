@@ -47,7 +47,7 @@ function Search({ getUserAxios, userInfo }) {
   function getBookFromAPI() {
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=intitle:"${searchInputTitle}"+inauthor:"${searchInputAuthor}"&maxResults=8`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchInputTitle}&maxResults=10`
       )
       .then((response) => {
         console.log("book", response.data.items);
@@ -60,35 +60,70 @@ function Search({ getUserAxios, userInfo }) {
 
   //console.log("title", searchInputTitle);
   //console.log("author", searchInputAuthor);
-  console.log("booksArray", booksArray);
+  //console.log("booksArray", booksArray);
 
   return (
     <>
       <h1 style={{ marginBottom: "2px" }}>SEARCH</h1>
-      <p style={{ fontSize: "13px", fontWeight: "bold", textAlign: "center", marginTop: "2px" }}>
-        Search for <u>both</u> title and author <br />
-        <u>or</u> just one of them
-      </p>
 
       <form onSubmit={handleSubmit}>
         <fieldset>
           <label>
-            <p>Title</p>
+            <p>Title, author or both</p>
             <input
               name="title"
-              placeholder="Search for a title"
+              placeholder="Search"
               onChange={handleChangeTitle}
               value={searchInputTitle}
+              required
+              autoFocus
             />
           </label>
           <br />
           <span
             style={{ fontSize: "11px", fontStyle: "italic", color: "grey" }}
           >
-            You must write complete words, ex "Jag for", inte "Jag f"
+            You must write complete words, <br />
+            eg "Harry Potter", not "Harry Pot"
           </span>
         </fieldset>
-        <fieldset>
+
+        <button type="submit">SEARCH</button>
+      </form>
+      {submitting && (
+        <p>
+          Searching for: <br />
+          <span style={{ fontStyle: "italic" }}>
+            {searchInputTitle ? searchInputTitle : searchInputAuthor}
+          </span>
+        </p>
+      )}
+      <RenderSearch booksArray={booksArray} userInfo={userInfo}/>
+    </>
+  );
+}
+
+export default Search;
+
+
+
+
+/*------*/
+// OM Author ska med är info nedan
+
+  /*  <p
+        style={{
+          fontSize: "13px",
+          fontWeight: "bold",
+          textAlign: "center",
+          marginTop: "2px",
+        }}
+      >
+        Search for <u>both</u> title and author <br />
+        <u>or</u> just one of them
+      </p> */
+
+  /*  <fieldset>
           <label>
             <p>Author</p>
             <input
@@ -105,20 +140,5 @@ function Search({ getUserAxios, userInfo }) {
           >
             You must write a complete name, ex "Karin", inte "Kar"
           </span>
-        </fieldset>
-        <button type="submit">SEARCH</button>
-      </form>
-      {submitting && (
-        <p>
-          Searching for: <br />
-          <span style={{ fontStyle: "italic" }}>
-            {searchInputTitle ? searchInputTitle : searchInputAuthor}
-          </span>
-        </p>
-      )}
-      <RenderSearch booksArray={booksArray} />
-    </>
-  );
-}
+        </fieldset> */
 
-export default Search;

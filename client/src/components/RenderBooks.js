@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 import styled from "styled-components";
-import Modal from "./Modal";
+import BookModal from "./BookModal";
 
 function RenderBooks({ bookClubInfo, userInfo }) {
   const [selectedTab, setSelectedTab] = useState("read");
@@ -84,7 +84,7 @@ function RenderBooks({ bookClubInfo, userInfo }) {
   return (
     <>
       {showModal && (
-        <Modal
+        <BookModal
           showModal={showModal}
           setShowModal={setShowModal}
           clickedBook={clickedBook}

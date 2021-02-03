@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
 
-function Modal({ setShowModal, showModal, clickedBook }) {
+function BookModal({ setShowModal, showModal, clickedBook }) {
   let mappedReviews;
   if (clickedBook.review) {
     mappedReviews = clickedBook.review.map((x) => {
@@ -43,7 +43,7 @@ function Modal({ setShowModal, showModal, clickedBook }) {
     </ModalDiv>
   );
 }
-export default Modal;
+export default BookModal;
 
 const BookInfoDiv = styled.div`
   width: 90%;
