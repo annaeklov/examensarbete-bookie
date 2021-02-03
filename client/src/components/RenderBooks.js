@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState} from "react";
 import styled from "styled-components";
-import { useHistory, Redirect, NavLink, useParams } from "react-router-dom";
 import Modal from "./Modal";
 
 function RenderBooks({ bookClubInfo, userInfo }) {
@@ -80,7 +78,6 @@ function RenderBooks({ bookClubInfo, userInfo }) {
     setActive(e.target.value);
   }
   function onClickATag(bookInfo) {
-    console.log("klick", bookInfo);
     setShowModal(true);
     setClickedBook(bookInfo);
   }

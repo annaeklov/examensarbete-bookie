@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import {
-  Redirect,
-  withRouter,
   Route,
   Switch,
   BrowserRouter as Router,
@@ -17,7 +15,6 @@ import Bookclubs from "./components/Bookclubs";
 import Bookclub from "./components/Bookclub";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {

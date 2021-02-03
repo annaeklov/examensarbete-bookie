@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useHistory, Redirect, Link } from "react-router-dom";
-import TabBar from "./TabBar";
+import { useHistory, Link } from "react-router-dom";
 import RenderBooks from "./RenderBooks";
 import { IoLogOutOutline } from "react-icons/io5";
 

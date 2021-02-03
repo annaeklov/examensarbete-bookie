@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, Redirect, NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import RenderSearch from "./RenderSearch";
 
 function Search({ getUserAxios, userInfo }) {
   let history = useHistory();
@@ -57,52 +58,18 @@ function Search({ getUserAxios, userInfo }) {
       });
   }
 
-  console.log("title", searchInputTitle);
-  console.log("author", searchInputAuthor);
+  //console.log("title", searchInputTitle);
+  //console.log("author", searchInputAuthor);
   console.log("booksArray", booksArray);
-
-  let mappedSearchedBooks;
-
-  if (booksArray && booksArray.length >= 1) {
-    console.log("ja");
-    mappedSearchedBooks = booksArray.map((searchedBook, x) => {
-      return (
-        <div key={searchedBook.id}>
-          <p>{searchedBook.volumeInfo.title} </p>
-          {searchedBook.volumeInfo.authors && (
-            <p>
-              {searchedBook.volumeInfo.authors.map((author) => {
-                return <p>{author}</p>;
-              })}
-            </p>
-          )}
-          {searchedBook.volumeInfo.imageLinks && (
-            <img
-              src={searchedBook.volumeInfo.imageLinks.smallThumbnail}
-              alt={searchedBook.volumeInfo.title}
-            />
-          )}
-        </div>
-      );
-    });
-  }
 
   return (
     <>
-      <h1>SEARCH</h1>
-      <p style={{ fontSize: "13px", fontWeight: "bold", textAlign: "center" }}>
+      <h1 style={{ marginBottom: "2px" }}>SEARCH</h1>
+      <p style={{ fontSize: "13px", fontWeight: "bold", textAlign: "center", marginTop: "2px" }}>
         Search for <u>both</u> title and author <br />
         <u>or</u> just one of them
       </p>
-      {submitting && (
-        <p>
-          Searching for:
-          <span style={{ fontStyle: "italic" }}>
-            {searchInputTitle ? searchInputTitle : searchInputAuthor}
-          </span>
-          ...
-        </p>
-      )}
+
       <form onSubmit={handleSubmit}>
         <fieldset>
           <label>
@@ -141,21 +108,17 @@ function Search({ getUserAxios, userInfo }) {
         </fieldset>
         <button type="submit">SEARCH</button>
       </form>
-      <Section>{mappedSearchedBooks}</Section>
-
+      {submitting && (
+        <p>
+          Searching for: <br />
+          <span style={{ fontStyle: "italic" }}>
+            {searchInputTitle ? searchInputTitle : searchInputAuthor}
+          </span>
+        </p>
+      )}
+      <RenderSearch booksArray={booksArray} />
     </>
   );
 }
 
 export default Search;
-
-const Section = styled.section`
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: unset;
-  padding: 5px 5px 100px 5px;
-  overflow: auto;
-  height: 80vh;
-`;

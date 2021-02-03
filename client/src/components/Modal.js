@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useHistory, Redirect, NavLink, useParams } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
 
 function Modal({ setShowModal, showModal, clickedBook }) {

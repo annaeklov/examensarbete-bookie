@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { useHistory, Redirect, NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RenderBooks from "./RenderBooks";
 import pic1 from "../pics/actress.png";
 import pic2 from "../pics/gardener.png";
@@ -30,11 +30,9 @@ function Bookclub({ userInfo }) {
   }
   const avatars = [pic1, pic2, pic3, pic4];
 
-  let avatar;
-
   function randomAvatar() {
     const randomIndex = Math.floor(Math.random() * avatars.length);
-    return (avatar = randomIndex);
+    return randomIndex;
   }
 
   let mappedMembers;
@@ -43,7 +41,7 @@ function Bookclub({ userInfo }) {
     mappedMembers = bookClubInfo.users.map((member) => {
       return (
         <div key={member.user_id}>
-          <img src={avatars[randomAvatar()]} />
+          <img src={avatars[randomAvatar()]} alt={member.name}/>
           <p>{member.name}</p>
         </div>
       );
