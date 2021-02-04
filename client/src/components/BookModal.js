@@ -4,13 +4,13 @@ import { GrClose } from "react-icons/gr";
 
 function BookModal({ setShowModal, showModal, clickedBook }) {
   let mappedReviews;
-  if (clickedBook.review) {
-    mappedReviews = clickedBook.review.map((x) => {
-      if (x.username) {
-        console.log("tom review", x.username);
+  if (clickedBook.reviews) {
+    mappedReviews = clickedBook.reviews.map((review) => {
+      if (review.username) {
+        console.log("tom review", review.username);
         return (
           <span>
-            "{x.comments}" - {x.username}, {x.rating}/5
+            "{review.comments}" - {review.username}, {review.rating}/5
           </span>
         );
       }
@@ -30,7 +30,7 @@ function BookModal({ setShowModal, showModal, clickedBook }) {
           <h3 className="bookInfoText title">{clickedBook.title}</h3>
           <h4 className="bookInfoText author">- {clickedBook.author}</h4>
           <p className="bookInfoText genre"> {clickedBook.genre}</p>
-          {clickedBook.review ? (
+          {clickedBook.reviews ? (
             <div>
               <p className="bookInfoText review">Reviews: </p>
               {mappedReviews}

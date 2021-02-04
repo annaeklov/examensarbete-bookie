@@ -64,46 +64,34 @@ app.get("/bookclub/:bookclubId", async (req, res) => {
   }
 });
 
-app.put("/addBookToRead/:bookclubId", async (req, res) => {
+//--------PUT----------//
+
+app.put("/addBook/:bookclubId", async (req, res) => {
   let bookclubId = req.params.bookclubId;
-  console.log(bookclubId);
-
-  if (!req.body.name) {
-    return res.status(400).end();
-  }
-
-  // kommer vara newBook = req.body.data, är ett objekt som kommer från frontend
+  console.log(req.body);
+  // newBook = req.body.data, är ett objekt från frontend
   let newBook = {
-    title: "sagan om ringen",
-    author: "jag",
-    genre: "",
-    coverSrc: "",
-    id: "id från API",
-  };
-  const data = await db.updateBookclubBooksToRead(newBook, bookclubId);
-  res.status(200).send("Sucess");
-});
-
-app.put("/addBookRead/:bookclubId", async (req, res) => {
-  let bookclubId = req.params.bookclubId;
-  console.log(bookclubId);
-
-  if (!req.body.name) {
-    return res.status(400).end();
-  }
-
-  // kommer vara newBook = req.body.data, är ett objekt som kommer från frontend
-  let newBook = {
-    name: "sagan om ringen",
-    author: "jag",
-    genre: "",
-    coverSrc: "",
-    id: "id från API",
+    title: req.body.title,
+    author: req.body.author,
+    genre: req.body.genre,
+    coverSrc: req.body.coverSrc,
+    id: req.body.id,
     reviews: [{ username: "", comment: "", rating: 0 }],
   };
-  const data = await db.updateBookclubBooksRead(newBook, bookclubId);
-  res.status(200).send("Sucess");
+  let whereToAddBook = req.body.whereToAddBook;
+
+  if (!req.body.title) {
+    return res.status(400).end();
+  }
+  const data = await db.updateBookclub(newBook, bookclubId, whereToAddBook);
+  if (data) {
+    res.status(200).send("Sucess");
+  } else {
+    res.status(400).end();
+  }
 });
+
+//----//
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
 

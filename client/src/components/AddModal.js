@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
+import { AddBook } from "./AddBook.js";
 
 function AddModal({
   showAddModal,
@@ -8,12 +9,56 @@ function AddModal({
   clickedBookToAdd,
   userInfo,
 }) {
-  const [active, setActive] = useState("");
-
+  const [activeTab, setActiveTab] = useState("");
+  const [selectedBookclubId, setSelectedBookclubId] = useState("");
 
   function changeTab(e) {
-    console.log(e.target.value);
-    setActive(e.target.value);
+    setActiveTab(e.target.value);
+    setSelectedBookclubId(e.target.id);
+  }
+/*   console.log("activeTab", activeTab);
+  console.log("bookclub id", selectedBookclubId);
+  console.log("clickedBookToAdd", clickedBookToAdd);
+ */
+  let mappedBookclubs;
+
+  if (userInfo.bookclubs) {
+    mappedBookclubs = userInfo.bookclubs.map((club) => {
+      return (
+        <Tabs>
+          <p key={club.bookclub_id}>{club.name}</p>
+          <Button
+            active={activeTab === `read${club.bookclub_id}`}
+            value="booksRead"
+            onClick={changeTab}
+            id={club.bookclub_id}
+          >
+            READ
+          </Button>
+          <Button
+            active={activeTab === `toRead${club.bookclub_id}`}
+            value="booksToRead"
+            onClick={changeTab}
+            id={club.bookclub_id}
+          >
+            TO READ
+          </Button>
+          <Button
+            active={activeTab === `currently${club.bookclub_id}`}
+            value="currentlyReading"
+            onClick={changeTab}
+            id={club.bookclub_id}
+          >
+            CURRENTLY
+          </Button>
+        </Tabs>
+      );
+    });
+  }
+
+  function onClickAddTo(clickedBookToAdd, activeTab, selectedBookclubId) {
+    console.log("clicked add", clickedBookToAdd, activeTab, selectedBookclubId);
+    AddBook(clickedBookToAdd, activeTab, selectedBookclubId);
   }
 
   return (
@@ -27,30 +72,43 @@ function AddModal({
             Add <strong>{clickedBookToAdd.volumeInfo.title}</strong> to...
           </p>
         </TopDiv>
-        <Tabs>
+{/*         <Tabs>
           <p>{userInfo.username}: </p>
           <Button
-            active={active === "readProfile"}
-            value="readProfile"
+            active={activeTab === `read${userInfo._id}`}
+            value="read"
             onClick={changeTab}
+            id={userInfo._id}
           >
             READ
           </Button>
           <Button
-            active={active === "toReadProfile"}
-            value="toReadProfile"
+            active={activeTab === `toRead${userInfo._id}`}
+            value="toRead"
             onClick={changeTab}
+            id={userInfo._id}
           >
             TO READ
           </Button>
           <Button
-            active={active === "currentlyProfile"}
-            value="currentlyProfile"
+            active={activeTab === `currently${userInfo._id}`}
+            value="currently"
             onClick={changeTab}
+            id={userInfo._id}
           >
             CURRENTLY
           </Button>
-        </Tabs>
+        </Tabs> */}
+        {mappedBookclubs}
+
+        <button
+          style={{ marginTop: "15px" }}
+          onClick={() => {
+            onClickAddTo(clickedBookToAdd, activeTab, selectedBookclubId);
+          }}
+        >
+          ADD
+        </button>
       </ModalDiv>
     </ModalContainer>
   );
@@ -71,9 +129,11 @@ const Button = styled.button`
   border: none;
   color: #262824;
   background-color: transparent;
-  border-bottom: ${(props) => (props.active ? "2px solid #262824" : "")};
-  outline: ${(props) => (props.active ? "none" : "")};
-  font-weight: ${(props) => (props.active ? "bold" : "")};
+  :focus {
+    border-bottom: 2px solid #262824;
+    outline: none;
+    font-weight: bold;
+  }
 `;
 
 const ModalContainer = styled.div`

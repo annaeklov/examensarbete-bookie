@@ -61,14 +61,16 @@ async function getBookclub(bookclubId) {
   }
 }
 
-async function updateBookclubBooksToRead(newBook, bookclubId) {
+//--------PUT----------//
+
+async function updateBookclub(newBook, bookclubId, whereToAddBook) {
+  var $push_query = {};
+  $push_query[whereToAddBook] = newBook;
   try {
     const result = await db.collection("bookclubsCollection").updateOne(
       { _id: ObjectId(bookclubId) },
       {
-        $push: {
-          booksToRead: newBook,
-        },
+        $push: $push_query,
       }
     );
     return result;
@@ -77,27 +79,12 @@ async function updateBookclubBooksToRead(newBook, bookclubId) {
   }
 }
 
-async function updateBookclubBooksRead(newBook, bookclubId) {
-  try {
-    const result = await db.collection("bookclubsCollection").updateOne(
-      { _id: ObjectId(bookclubId) },
-      {
-        $push: {
-          booksRead: newBook,
-        },
-      }
-    );
-    return result;
-  } catch {
-    throw error;
-  }
-}
+
 module.exports.getUser = getUser;
 module.exports.loginUser = loginUser;
 module.exports.getBookclubs = getBookclubs;
 module.exports.getBookclub = getBookclub;
-module.exports.updateBookclubBooksToRead = updateBookclubBooksToRead;
-module.exports.updateBookclubBooksRead = updateBookclubBooksRead;
+module.exports.updateBookclub = updateBookclub;
 
 //module.exports.getAllBooksInOneBookclub = getAllBooksInOneBookclub;
 //module.exports.postBookToBookClub = postBookToBookClub;

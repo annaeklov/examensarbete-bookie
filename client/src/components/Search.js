@@ -23,8 +23,11 @@ function Search({ getUserAxios, userInfo }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (searchInputTitle.trim() === "" || searchInputAuthor.trim() === "") {
+    if (searchInputTitle.trim().length === 0) {
       console.log("i trim");
+      setSearchInputTitle("");
+      setSearchInputAuthor("");
+      return;
     }
     setSubmitting(true);
 
@@ -98,20 +101,20 @@ function Search({ getUserAxios, userInfo }) {
           </span>
         </p>
       )}
-      <RenderSearch booksArray={booksArray} userInfo={userInfo}/>
+      <RenderSearch booksArray={booksArray} userInfo={userInfo} />
     </>
   );
 }
 
 export default Search;
 
-
-
-
 /*------*/
 // OM Author ska med är info nedan
 
-  /*  <p
+/* ||
+      searchInputAuthor.trim().length === 0 */
+
+/*  <p
         style={{
           fontSize: "13px",
           fontWeight: "bold",
@@ -123,7 +126,7 @@ export default Search;
         <u>or</u> just one of them
       </p> */
 
-  /*  <fieldset>
+/*  <fieldset>
           <label>
             <p>Author</p>
             <input
@@ -141,4 +144,3 @@ export default Search;
             You must write a complete name, ex "Karin", inte "Kar"
           </span>
         </fieldset> */
-
