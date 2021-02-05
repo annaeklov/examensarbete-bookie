@@ -1,10 +1,10 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BookModal from "./BookModal";
 
 function RenderBooks({ bookClubInfo, userInfo }) {
-  const [selectedTab, setSelectedTab] = useState("read");
-  const [active, setActive] = useState("read");
+  const [selectedTab, setSelectedTab] = useState("booksRead");
+  const [active, setActive] = useState("booksRead");
   const [showModal, setShowModal] = useState(false);
   const [clickedBook, setClickedBook] = useState({});
 
@@ -12,22 +12,61 @@ function RenderBooks({ bookClubInfo, userInfo }) {
 
   if (userInfo) {
     if (userInfo.booksRead) {
-      if (selectedTab === "read") {
+      if (selectedTab === "booksRead") {
         mappedBooks = userInfo.booksRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc}  alt={book.title} />
+              {book.coverSrc ? (
+                <Img src={book.coverSrc} alt={book.title} />
+              ) : (
+                <Img
+                  src={
+                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+                  }
+                  alt={book.title}
+                />
+              )}{" "}
             </ATag>
           );
         });
       }
     }
+
     if (userInfo.booksToRead) {
-      if (selectedTab === "toRead") {
+      if (selectedTab === "booksToRead") {
         mappedBooks = userInfo.booksToRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc ? (
+                <Img src={book.coverSrc} alt={book.title} />
+              ) : (
+                <Img
+                  src={
+                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+                  }
+                  alt={book.title}
+                />
+              )}{" "}
+            </ATag>
+          );
+        });
+      }
+    }
+    if (userInfo.currentlyReading) {
+      if (selectedTab === "currentlyReading") {
+        mappedBooks = userInfo.currentlyReading.map((book, x) => {
+          return (
+            <ATag key={x} onClick={() => onClickATag(book)}>
+              {book.coverSrc ? (
+                <Img src={book.coverSrc} alt={book.title} />
+              ) : (
+                <Img
+                  src={
+                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+                  }
+                  alt={book.title}
+                />
+              )}
             </ATag>
           );
         });
@@ -37,41 +76,66 @@ function RenderBooks({ bookClubInfo, userInfo }) {
 
   if (bookClubInfo) {
     if (bookClubInfo.booksRead) {
-      if (selectedTab === "read") {
-        mappedBooks = bookClubInfo.booksRead.map((book,x) => {
+      if (selectedTab === "booksRead") {
+        mappedBooks = bookClubInfo.booksRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc ? (
+                <Img src={book.coverSrc} alt={book.title} />
+              ) : (
+                <Img
+                  src={
+                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+                  }
+                  alt={book.title}
+                />
+              )}
             </ATag>
           );
         });
       }
     }
     if (bookClubInfo.booksToRead) {
-      if (selectedTab === "toRead") {
+      if (selectedTab === "booksToRead") {
         mappedBooks = bookClubInfo.booksToRead.map((book) => {
           return (
             <ATag onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc} key={book.id} alt={book.title} />
+              {book.coverSrc ? (
+                <Img src={book.coverSrc} alt={book.title} />
+              ) : (
+                <Img
+                  src={
+                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+                  }
+                  alt={book.title}
+                />
+              )}{" "}
             </ATag>
           );
         });
       }
     }
     if (bookClubInfo.currentlyReading) {
-      if (selectedTab === "currently") {
-        mappedBooks = bookClubInfo.currentlyReading.map((book,x) => {
+      if (selectedTab === "currentlyReading") {
+        mappedBooks = bookClubInfo.currentlyReading.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc ? (
+                <Img src={book.coverSrc} alt={book.title} />
+              ) : (
+                <Img
+                  src={
+                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+                  }
+                  alt={book.title}
+                />
+              )}{" "}
             </ATag>
           );
         });
       }
     }
   }
-
-  console.log(showModal);
 
   function changeTab(e) {
     setSelectedTab(e.target.value);
@@ -88,23 +152,28 @@ function RenderBooks({ bookClubInfo, userInfo }) {
           showModal={showModal}
           setShowModal={setShowModal}
           clickedBook={clickedBook}
+          selectedTab={selectedTab}
         />
       )}
       <Tabs>
         <Button
-          active={active === "read"}
-          value="read"
+          active={active === "booksRead"}
+          value="booksRead"
           onClick={changeTab}
           autoFocus
         >
           READ
         </Button>
-        <Button active={active === "toRead"} value="toRead" onClick={changeTab}>
+        <Button
+          active={active === "booksToRead"}
+          value="booksToRead"
+          onClick={changeTab}
+        >
           TO READ
         </Button>
         <Button
-          active={active === "currently"}
-          value="currently"
+          active={active === "currentlyReading"}
+          value="currentlyReading"
           onClick={changeTab}
         >
           CURRENTLY

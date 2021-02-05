@@ -16,19 +16,16 @@ function AddModal({
     setActiveTab(e.target.value);
     setSelectedBookclubId(e.target.id);
   }
-/*   console.log("activeTab", activeTab);
-  console.log("bookclub id", selectedBookclubId);
-  console.log("clickedBookToAdd", clickedBookToAdd);
- */
+
   let mappedBookclubs;
 
   if (userInfo.bookclubs) {
     mappedBookclubs = userInfo.bookclubs.map((club) => {
       return (
-        <Tabs>
+        <Tabs key={club.bookclub_id}>
           <p key={club.bookclub_id}>{club.name}</p>
           <Button
-            active={activeTab === `read${club.bookclub_id}`}
+            active={activeTab === `booksRead${club.bookclub_id}`}
             value="booksRead"
             onClick={changeTab}
             id={club.bookclub_id}
@@ -36,7 +33,7 @@ function AddModal({
             READ
           </Button>
           <Button
-            active={activeTab === `toRead${club.bookclub_id}`}
+            active={activeTab === `booksToRead${club.bookclub_id}`}
             value="booksToRead"
             onClick={changeTab}
             id={club.bookclub_id}
@@ -44,7 +41,7 @@ function AddModal({
             TO READ
           </Button>
           <Button
-            active={activeTab === `currently${club.bookclub_id}`}
+            active={activeTab === `currentlyReading${club.bookclub_id}`}
             value="currentlyReading"
             onClick={changeTab}
             id={club.bookclub_id}
@@ -57,7 +54,6 @@ function AddModal({
   }
 
   function onClickAddTo(clickedBookToAdd, activeTab, selectedBookclubId) {
-    console.log("clicked add", clickedBookToAdd, activeTab, selectedBookclubId);
     AddBook(clickedBookToAdd, activeTab, selectedBookclubId);
   }
 
@@ -72,33 +68,7 @@ function AddModal({
             Add <strong>{clickedBookToAdd.volumeInfo.title}</strong> to...
           </p>
         </TopDiv>
-{/*         <Tabs>
-          <p>{userInfo.username}: </p>
-          <Button
-            active={activeTab === `read${userInfo._id}`}
-            value="read"
-            onClick={changeTab}
-            id={userInfo._id}
-          >
-            READ
-          </Button>
-          <Button
-            active={activeTab === `toRead${userInfo._id}`}
-            value="toRead"
-            onClick={changeTab}
-            id={userInfo._id}
-          >
-            TO READ
-          </Button>
-          <Button
-            active={activeTab === `currently${userInfo._id}`}
-            value="currently"
-            onClick={changeTab}
-            id={userInfo._id}
-          >
-            CURRENTLY
-          </Button>
-        </Tabs> */}
+
         {mappedBookclubs}
 
         <button
@@ -147,7 +117,6 @@ const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
-  //backdrop-filter: blur(3px);
   padding: 10px;
   z-index: 1;
 `;
@@ -176,3 +145,31 @@ const TopDiv = styled.div`
     }
   }
 `;
+
+/*         <Tabs>
+          <p>{userInfo.username}: </p>
+          <Button
+            active={activeTab === `read${userInfo._id}`}
+            value="read"
+            onClick={changeTab}
+            id={userInfo._id}
+          >
+            READ
+          </Button>
+          <Button
+            active={activeTab === `toRead${userInfo._id}`}
+            value="toRead"
+            onClick={changeTab}
+            id={userInfo._id}
+          >
+            TO READ
+          </Button>
+          <Button
+            active={activeTab === `currently${userInfo._id}`}
+            value="currently"
+            onClick={changeTab}
+            id={userInfo._id}
+          >
+            CURRENTLY
+          </Button>
+        </Tabs> */

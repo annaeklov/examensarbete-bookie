@@ -55,7 +55,6 @@ function RenderSearch({ booksArray, userInfo }) {
     setShowAddModal(true);
     setClickedBookToAdd(searchedBook);
   }
-  console.log(showAddModal);
 
   return (
     <>

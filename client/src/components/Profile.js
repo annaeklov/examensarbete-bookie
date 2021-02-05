@@ -4,7 +4,6 @@ import { useHistory, Link } from "react-router-dom";
 import RenderBooks from "./RenderBooks";
 import { IoLogOutOutline } from "react-icons/io5";
 
-
 function Profile({ getUserAxios, userInfo }) {
   let history = useHistory();
 
@@ -23,9 +22,11 @@ function Profile({ getUserAxios, userInfo }) {
   if (userInfo.bookclubs) {
     mappedBookclubs = userInfo.bookclubs.map((club) => {
       return (
-        <li key={club.bookclub_id}>
-          <Link to={"/bookclubs/" + club.bookclub_id}>{club.name}</Link>
-        </li>
+        <p className="bookclubName" key={club.bookclub_id}>
+          <Link className="links" to={"/bookclubs/" + club.bookclub_id}>
+            {club.name}
+          </Link>
+        </p>
       );
     });
   }
@@ -44,7 +45,7 @@ function Profile({ getUserAxios, userInfo }) {
         </button>
         <div>
           <ul>
-            <strong>Your bookclubs</strong>
+            <strong>My bookclubs</strong>
             {mappedBookclubs}
           </ul>
         </div>
@@ -64,6 +65,14 @@ const ProfileInfoDiv = styled.div`
   height: 200px;
   h1 {
     font-weight: 900;
+  }
+  .bookclubName {
+    margin: 2px;
+    text-decoration: underline;
+  }
+  .links {
+    text-decoration: none;
+    color: black;
   }
   .meeting {
     margin: 0;

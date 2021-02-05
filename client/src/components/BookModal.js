@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
+import { useParams } from "react-router-dom";
 
-function BookModal({ setShowModal, showModal, clickedBook }) {
+function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
+  const { id } = useParams();
+
   let mappedReviews;
   if (clickedBook.reviews) {
     mappedReviews = clickedBook.reviews.map((review) => {
@@ -16,6 +19,9 @@ function BookModal({ setShowModal, showModal, clickedBook }) {
       }
     });
   }
+  console.log(id);
+
+  console.log(selectedTab);
 
   return (
     <ModalDiv>
@@ -23,14 +29,26 @@ function BookModal({ setShowModal, showModal, clickedBook }) {
         <button onClick={() => setShowModal(false)}>
           <GrClose />
         </button>
+        <button className="moveBtn" onClick={() => console.log("click")}>
+          Move book
+        </button>
       </TopDiv>
       <Section>
-        <img src={clickedBook.coverSrc} alt={clickedBook.title} />
+        {clickedBook.coverSrc ? (
+          <img src={clickedBook.coverSrc} alt={clickedBook.title} />
+        ) : (
+          <img
+            src={
+              "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+            }
+            alt={clickedBook.title}
+          />
+        )}
         <BookInfoDiv>
           <h3 className="bookInfoText title">{clickedBook.title}</h3>
           <h4 className="bookInfoText author">- {clickedBook.author}</h4>
           <p className="bookInfoText genre"> {clickedBook.genre}</p>
-          {clickedBook.reviews ? (
+          {clickedBook.reviews.length > 1 ? (
             <div>
               <p className="bookInfoText review">Reviews: </p>
               {mappedReviews}
@@ -80,6 +98,8 @@ const ModalDiv = styled.div`
 `;
 const TopDiv = styled.div`
   margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
   button {
     width: 50px;
     height: 30px;
@@ -87,6 +107,16 @@ const TopDiv = styled.div`
     background-color: transparent;
     svg {
       font-size: 20px;
+    }
+  }
+  .moveBtn {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 60px;
+    height: 40px;
+    :active,
+    :focus {
+      outline: none;
     }
   }
 `;
