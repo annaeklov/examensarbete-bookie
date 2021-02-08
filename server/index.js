@@ -68,7 +68,7 @@ app.get("/bookclub/:bookclubId", async (req, res) => {
 
 app.put("/addBook/:bookclubId", async (req, res) => {
   let bookclubId = req.params.bookclubId;
-  console.log(req.body);
+  console.log("add", req.body);
   // newBook = req.body.data, är ett objekt från frontend
   let newBook = {
     title: req.body.title,
@@ -79,11 +79,37 @@ app.put("/addBook/:bookclubId", async (req, res) => {
     reviews: [{ username: "", comment: "", rating: 0 }],
   };
   let whereToAddBook = req.body.whereToAddBook;
+  console.log("addtolist", whereToAddBook);
 
   if (!req.body.title) {
     return res.status(400).end();
   }
   const data = await db.updateBookclub(newBook, bookclubId, whereToAddBook);
+  if (data) {
+    res.status(200).send("Sucess");
+  } else {
+    res.status(400).end();
+  }
+});
+
+app.put("/removeBook/:bookclubId", async (req, res) => {
+  let bookclubId = req.params.bookclubId;
+  console.log("put", req.body);
+
+  let removeBook = { id: req.body.clickedBookId };
+  //console.log("put bookid", bookId);
+
+  let whereToRemoveBook = req.body.whereToRemoveBook;
+
+  if (!req.body.clickedBookId) {
+    return res.status(400).end();
+  }
+  const data = await db.updateBookclubRemoveBook(
+    removeBook,
+    bookclubId,
+    whereToRemoveBook
+  );
+  
   if (data) {
     res.status(200).send("Sucess");
   } else {

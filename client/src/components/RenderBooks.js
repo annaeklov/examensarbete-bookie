@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import BookModal from "./BookModal";
 
-function RenderBooks({ bookClubInfo, userInfo }) {
+function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
   const [selectedTab, setSelectedTab] = useState("booksRead");
   const [active, setActive] = useState("booksRead");
-  const [showModal, setShowModal] = useState(false);
   const [clickedBook, setClickedBook] = useState({});
 
   let mappedBooks;
@@ -77,7 +76,7 @@ function RenderBooks({ bookClubInfo, userInfo }) {
   if (bookClubInfo) {
     if (bookClubInfo.booksRead) {
       if (selectedTab === "booksRead") {
-        mappedBooks = bookClubInfo.booksRead.map((book, x) => {
+        mappedBooks = bookClubInfo.booksRead.reverse().map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
               {book.coverSrc ? (
@@ -179,7 +178,7 @@ function RenderBooks({ bookClubInfo, userInfo }) {
           CURRENTLY
         </Button>
       </Tabs>
-      <BooksSection>{mappedBooks}</BooksSection>
+      <BooksSection>{mappedBooks && mappedBooks.reverse()}</BooksSection>
     </>
   );
 }

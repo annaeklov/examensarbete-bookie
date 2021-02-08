@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
 import { useParams } from "react-router-dom";
+import { RemoveBook } from "./RemoveBook.js";
 
 function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
   const { id } = useParams();
+  let bookclubId = id;
+  let clickedBookId = clickedBook.id;
 
   let mappedReviews;
   if (clickedBook.reviews) {
@@ -19,9 +22,15 @@ function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
       }
     });
   }
-  console.log(id);
 
-  console.log(selectedTab);
+  function onClickRemoveBook(
+    bookclubId,
+    selectedTab,
+    clickedBookId,
+    setShowModal
+  ) {
+    RemoveBook(bookclubId, selectedTab, clickedBookId, setShowModal);
+  }
 
   return (
     <ModalDiv>
@@ -29,8 +38,21 @@ function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
         <button onClick={() => setShowModal(false)}>
           <GrClose />
         </button>
-        <button className="moveBtn" onClick={() => console.log("click")}>
+        <button className="btn" onClick={() => console.log("click")}>
           Move book
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            onClickRemoveBook(
+              bookclubId,
+              selectedTab,
+              clickedBookId,
+              setShowModal
+            );
+          }}
+        >
+          Remove book
         </button>
       </TopDiv>
       <Section>
@@ -48,7 +70,7 @@ function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
           <h3 className="bookInfoText title">{clickedBook.title}</h3>
           <h4 className="bookInfoText author">- {clickedBook.author}</h4>
           <p className="bookInfoText genre"> {clickedBook.genre}</p>
-          {clickedBook.reviews.length > 1 ? (
+          {clickedBook.reviews && clickedBook.reviews.length > 1 ? (
             <div>
               <p className="bookInfoText review">Reviews: </p>
               {mappedReviews}
@@ -109,7 +131,7 @@ const TopDiv = styled.div`
       font-size: 20px;
     }
   }
-  .moveBtn {
+  .btn {
     border: 1px solid black;
     border-radius: 5px;
     width: 60px;

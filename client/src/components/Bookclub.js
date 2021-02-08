@@ -10,12 +10,14 @@ import pic4 from "../pics/staff.png";
 
 function Bookclub({ userInfo }) {
   const [bookClubInfo, setBookClubInfo] = useState({});
+  const [showModal, setShowModal] = useState(false);
+
   const { id } = useParams();
 
   useEffect(() => {
     getUserBookclub();
     return () => {};
-  }, []);
+  }, [showModal]);
 
   function getUserBookclub() {
     axios
@@ -41,7 +43,7 @@ function Bookclub({ userInfo }) {
     mappedMembers = bookClubInfo.users.map((member) => {
       return (
         <div key={member.user_id}>
-          <img src={avatars[randomAvatar()]} alt={member.name}/>
+          <img src={avatars[randomAvatar()]} alt={member.name} />
           <p>{member.name}</p>
         </div>
       );
@@ -57,7 +59,11 @@ function Bookclub({ userInfo }) {
         </p>
         <div className="membersDiv">{bookClubInfo.users && mappedMembers}</div>
       </BookClubInfoDiv>
-      <RenderBooks bookClubInfo={bookClubInfo} />
+      <RenderBooks
+        bookClubInfo={bookClubInfo}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </>
   );
 }

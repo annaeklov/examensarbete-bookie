@@ -49,7 +49,6 @@ async function getBookclubs() {
 }
 
 async function getBookclub(bookclubId) {
-  console.log("inside getBookclub");
   try {
     const result = await db
       .collection("bookclubsCollection")
@@ -65,7 +64,11 @@ async function getBookclub(bookclubId) {
 
 async function updateBookclub(newBook, bookclubId, whereToAddBook) {
   var $push_query = {};
+  console.log($push_query);
+
   $push_query[whereToAddBook] = newBook;
+  console.log("add db", $push_query[whereToAddBook]);
+
   try {
     const result = await db.collection("bookclubsCollection").updateOne(
       { _id: ObjectId(bookclubId) },
@@ -79,12 +82,41 @@ async function updateBookclub(newBook, bookclubId, whereToAddBook) {
   }
 }
 
+async function updateBookclubRemoveBook(
+  removeBook,
+  bookclubId,
+  whereToRemoveBook
+) {
+  console.log(removeBook.id);
+  var $pull_query = {};
+  $pull_query[whereToRemoveBook] = removeBook;
+
+  console.log("remove pull_query", $pull_query);
+    console.log("removeBook", {
+        $pull: $pull_query
+      });
+
+  try {
+    const result = await db.collection("bookclubsCollection").updateMany(
+      { _id: ObjectId(bookclubId) },
+      {
+        $pull: $pull_query
+      },
+      false,
+      true
+    );
+    return result;
+  } catch {
+    throw error;
+  }
+}
 
 module.exports.getUser = getUser;
 module.exports.loginUser = loginUser;
 module.exports.getBookclubs = getBookclubs;
 module.exports.getBookclub = getBookclub;
 module.exports.updateBookclub = updateBookclub;
+module.exports.updateBookclubRemoveBook = updateBookclubRemoveBook;
 
 //module.exports.getAllBooksInOneBookclub = getAllBooksInOneBookclub;
 //module.exports.postBookToBookClub = postBookToBookClub;
