@@ -181,7 +181,14 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
           CURRENTLY READING
         </Button>
       </Tabs>
-      <BooksSection>{mappedBooks && mappedBooks.reverse()}</BooksSection>
+      <BooksSection>
+        {mappedBooks &&
+          (mappedBooks.length > 0 ? (
+            mappedBooks.reverse()
+          ) : (
+            <p>No books in this list..</p>
+          ))}
+      </BooksSection>
     </>
   );
 }
