@@ -87,11 +87,8 @@ async function updateBookclubRemoveBook(
   bookclubId,
   whereToRemoveBook
 ) {
-  console.log(removeBook.id);
   var $pull_query = {};
   $pull_query[whereToRemoveBook] = removeBook;
-
-  console.log("remove pull_query", $pull_query);
     console.log("removeBook", {
         $pull: $pull_query
       });
@@ -101,9 +98,7 @@ async function updateBookclubRemoveBook(
       { _id: ObjectId(bookclubId) },
       {
         $pull: $pull_query
-      },
-      false,
-      true
+      }, true
     );
     return result;
   } catch {

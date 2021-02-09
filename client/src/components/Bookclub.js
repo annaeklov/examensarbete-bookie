@@ -23,7 +23,6 @@ function Bookclub({ userInfo }) {
     axios
       .get(`http://localhost:3000/bookclub/${id}`)
       .then((response) => {
-        console.log(response.data);
         setBookClubInfo(response.data);
       })
       .catch((error) => {

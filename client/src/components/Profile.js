@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 import RenderBooks from "./RenderBooks";
 import { IoLogOutOutline } from "react-icons/io5";
 
 function Profile({ getUserAxios, userInfo }) {
+  const [showModal, setShowModal] = useState(false);
+
   let history = useHistory();
 
   useEffect(() => {
@@ -50,7 +52,11 @@ function Profile({ getUserAxios, userInfo }) {
           </ul>
         </div>
       </ProfileInfoDiv>
-      <RenderBooks userInfo={userInfo} />
+      <RenderBooks
+        userInfo={userInfo}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </>
   );
 }

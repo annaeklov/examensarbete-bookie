@@ -23,7 +23,6 @@ function Bookclubs({ getUserAxios, userInfo }) {
   console.log(userInfo.bookclubs);
 
   if (userInfo.bookclubs) {
-    console.log(userInfo.bookclubs);
     mappedBookclubs = userInfo.bookclubs.map((club) => {
       return (
         <p className="bookclubName" key={club.bookclub_id}>

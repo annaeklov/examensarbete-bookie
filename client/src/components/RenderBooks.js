@@ -76,7 +76,7 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
   if (bookClubInfo) {
     if (bookClubInfo.booksRead) {
       if (selectedTab === "booksRead") {
-        mappedBooks = bookClubInfo.booksRead.reverse().map((book, x) => {
+        mappedBooks = bookClubInfo.booksRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
               {book.coverSrc ? (
@@ -96,9 +96,9 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
     }
     if (bookClubInfo.booksToRead) {
       if (selectedTab === "booksToRead") {
-        mappedBooks = bookClubInfo.booksToRead.map((book) => {
+        mappedBooks = bookClubInfo.booksToRead.map((book, x) => {
           return (
-            <ATag onClick={() => onClickATag(book)}>
+            <ATag key={x} onClick={() => onClickATag(book)}>
               {book.coverSrc ? (
                 <Img src={book.coverSrc} alt={book.title} />
               ) : (
@@ -144,6 +144,7 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
     setShowModal(true);
     setClickedBook(bookInfo);
   }
+
   return (
     <>
       {showModal && (
@@ -152,6 +153,8 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
           setShowModal={setShowModal}
           clickedBook={clickedBook}
           selectedTab={selectedTab}
+          bookClubInfo={bookClubInfo}
+          userInfo={userInfo}
         />
       )}
       <Tabs>
@@ -161,21 +164,21 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
           onClick={changeTab}
           autoFocus
         >
-          READ
+          HAVE READ
         </Button>
         <Button
           active={active === "booksToRead"}
           value="booksToRead"
           onClick={changeTab}
         >
-          TO READ
+          WANT TO READ
         </Button>
         <Button
           active={active === "currentlyReading"}
           value="currentlyReading"
           onClick={changeTab}
         >
-          CURRENTLY
+          CURRENTLY READING
         </Button>
       </Tabs>
       <BooksSection>{mappedBooks && mappedBooks.reverse()}</BooksSection>

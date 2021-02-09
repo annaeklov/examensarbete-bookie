@@ -3,17 +3,33 @@ import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
 import { useParams } from "react-router-dom";
 import { RemoveBook } from "./RemoveBook.js";
+import AddModal from "./AddModal";
+import DropdownMove from "./DropdownMove";
 
-function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
+function BookModal({
+  setShowModal,
+  showModal,
+  clickedBook,
+  selectedTab,
+  bookClubInfo,
+  userInfo,
+}) {
+  const [selectedOptionMove, setSelectedOptionMove] = useState(selectedTab);
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const { id } = useParams();
   let bookclubId = id;
   let clickedBookId = clickedBook.id;
-
   let mappedReviews;
+  let options = [
+    { label: "Have read", value: "booksRead" },
+    { label: "Want to read", value: "booksToRead" },
+    { label: "Currently reading", value: "currentlyReading" },
+  ];
+
   if (clickedBook.reviews) {
     mappedReviews = clickedBook.reviews.map((review) => {
       if (review.username) {
-        console.log("tom review", review.username);
         return (
           <span>
             "{review.comments}" - {review.username}, {review.rating}/5
@@ -32,15 +48,32 @@ function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
     RemoveBook(bookclubId, selectedTab, clickedBookId, setShowModal);
   }
 
+  function onClickMoveBook() {
+    setShowDropdown(true);
+  }
+
   return (
     <ModalDiv>
       <TopDiv>
         <button onClick={() => setShowModal(false)}>
           <GrClose />
         </button>
-        <button className="btn" onClick={() => console.log("click")}>
-          Move book
+        <button className="btn" onClick={() => onClickMoveBook()}>
+          Move to...
         </button>
+        {showDropdown && (
+          <DropdownMove
+            options={options}
+            selectedOptionMove={selectedOptionMove}
+            onSelectedChange={setSelectedOptionMove}
+            previousList={selectedTab}
+            bookclubId={bookclubId}
+            setShowDropdown={setShowDropdown}
+            clickedBook={clickedBook}
+            setShowModal={setShowModal}
+          />
+        )}
+
         <button
           className="btn"
           onClick={() => {
@@ -56,6 +89,7 @@ function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
         </button>
       </TopDiv>
       <Section>
+        <p>/{selectedTab}</p>
         {clickedBook.coverSrc ? (
           <img src={clickedBook.coverSrc} alt={clickedBook.title} />
         ) : (
@@ -68,7 +102,7 @@ function BookModal({ setShowModal, showModal, clickedBook, selectedTab }) {
         )}
         <BookInfoDiv>
           <h3 className="bookInfoText title">{clickedBook.title}</h3>
-          <h4 className="bookInfoText author">- {clickedBook.author}</h4>
+          <h4 className="bookInfoText author">- {clickedBook.authors}</h4>
           <p className="bookInfoText genre"> {clickedBook.genre}</p>
           {clickedBook.reviews && clickedBook.reviews.length > 1 ? (
             <div>
@@ -148,7 +182,7 @@ const Section = styled.section`
   align-items: center;
   margin-top: 30px;
   img {
-    width: 250px;
+    width: 230px;
     height: 350px;
   }
 `;

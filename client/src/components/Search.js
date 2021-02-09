@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
 import RenderSearch from "./RenderSearch";
 
 function Search({ getUserAxios, userInfo }) {
