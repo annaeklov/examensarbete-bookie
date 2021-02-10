@@ -76,15 +76,38 @@ app.put("/addBook/:bookclubId", async (req, res) => {
     genre: req.body.genre,
     coverSrc: req.body.coverSrc,
     id: req.body.id,
-    reviews: [{ username: "", comment: "", rating: 0 }],
+    reviews: [],
   };
   let whereToAddBook = req.body.whereToAddBook;
-  console.log("addtolist", whereToAddBook);
 
   if (!req.body.title) {
     return res.status(400).end();
   }
   const data = await db.updateBookclub(newBook, bookclubId, whereToAddBook);
+  if (data) {
+    res.status(200).send("Sucess");
+  } else {
+    res.status(400).end();
+  }
+});
+
+app.put("/addReview/:bookclubId", async (req, res) => {
+  let bookclubId = req.params.bookclubId;
+  console.log("add review req.body", req.body);
+  // newReview = req.body.data, är ett objekt från frontend
+  let newReview = {
+    id: req.body.id,
+    reviews: {
+      username: req.body.username,
+      comment: req.body.comment,
+      rating: req.body.rating,
+    },
+  };
+
+  if (!req.body.id) {
+    return res.status(400).end();
+  }
+  const data = await db.updateBookclubAddReview(newReview, bookclubId);
   if (data) {
     res.status(200).send("Sucess");
   } else {
@@ -108,7 +131,7 @@ app.put("/removeBook/:bookclubId", async (req, res) => {
     bookclubId,
     whereToRemoveBook
   );
-  
+
   if (data) {
     res.status(200).send("Sucess");
   } else {

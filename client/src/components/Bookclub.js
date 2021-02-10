@@ -62,6 +62,7 @@ function Bookclub({ userInfo }) {
         bookClubInfo={bookClubInfo}
         showModal={showModal}
         setShowModal={setShowModal}
+        userInfo={userInfo}
       />
     </>
   );

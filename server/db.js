@@ -82,6 +82,26 @@ async function updateBookclub(newBook, bookclubId, whereToAddBook) {
   }
 }
 
+async function updateBookclubAddReview(
+  newReview,
+  bookclubId
+) {
+  try {
+    const result = await db.collection("bookclubsCollection").updateOne(
+      {
+        _id: ObjectId(bookclubId),
+        "booksRead.id": newReview.id,
+      },
+      {
+        $push: { "booksRead.$.reviews": newReview.reviews },
+      }
+    );
+    return result;
+  } catch {
+    throw error;
+  }
+}
+
 async function updateBookclubRemoveBook(
   removeBook,
   bookclubId,
@@ -89,16 +109,17 @@ async function updateBookclubRemoveBook(
 ) {
   var $pull_query = {};
   $pull_query[whereToRemoveBook] = removeBook;
-    console.log("removeBook", {
-        $pull: $pull_query
-      });
+  console.log("removeBook", {
+    $pull: $pull_query,
+  });
 
   try {
     const result = await db.collection("bookclubsCollection").updateMany(
       { _id: ObjectId(bookclubId) },
       {
-        $pull: $pull_query
-      }, true
+        $pull: $pull_query,
+      },
+      true
     );
     return result;
   } catch {
@@ -112,6 +133,7 @@ module.exports.getBookclubs = getBookclubs;
 module.exports.getBookclub = getBookclub;
 module.exports.updateBookclub = updateBookclub;
 module.exports.updateBookclubRemoveBook = updateBookclubRemoveBook;
+module.exports.updateBookclubAddReview = updateBookclubAddReview;
 
 //module.exports.getAllBooksInOneBookclub = getAllBooksInOneBookclub;
 //module.exports.postBookToBookClub = postBookToBookClub;

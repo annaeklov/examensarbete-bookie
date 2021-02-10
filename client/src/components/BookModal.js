@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { RemoveBook } from "./RemoveBook.js";
 import AddModal from "./AddModal";
 import DropdownMove from "./DropdownMove";
+import AddReviewModal from "./AddReviewModal";
 
 function BookModal({
   setShowModal,
@@ -16,6 +17,7 @@ function BookModal({
 }) {
   const [selectedOptionMove, setSelectedOptionMove] = useState(selectedTab);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showAddReviewModal, setShowAddReviewModal] = useState(false);
 
   const { id } = useParams();
   let bookclubId = id;
@@ -28,11 +30,12 @@ function BookModal({
   ];
 
   if (clickedBook.reviews) {
-    mappedReviews = clickedBook.reviews.map((review) => {
+    mappedReviews = clickedBook.reviews.map((review, x) => {
       if (review.username) {
         return (
-          <span>
-            "{review.comments}" - {review.username}, {review.rating}/5
+          <span key={x}>
+            "{review.comment}" - {review.username}, {review.rating}/5
+            <br />
           </span>
         );
       }
@@ -48,17 +51,13 @@ function BookModal({
     RemoveBook(bookclubId, selectedTab, clickedBookId, setShowModal);
   }
 
-  function onClickMoveBook() {
-    setShowDropdown(true);
-  }
-
   return (
     <ModalDiv>
       <TopDiv>
         <button onClick={() => setShowModal(false)}>
           <GrClose />
         </button>
-        <button className="btn" onClick={() => onClickMoveBook()}>
+        <button className="btn" onClick={() => setShowDropdown(true)}>
           Move to...
         </button>
         {showDropdown && (
@@ -102,11 +101,24 @@ function BookModal({
         )}
         <BookInfoDiv>
           <h3 className="bookInfoText title">{clickedBook.title}</h3>
-          <h4 className="bookInfoText author">- {clickedBook.authors}</h4>
+          <h4 className="bookInfoText author">- {clickedBook.author}</h4>
           <p className="bookInfoText genre"> {clickedBook.genre}</p>
-          {clickedBook.reviews && clickedBook.reviews.length > 1 ? (
+          {clickedBook.reviews && clickedBook.reviews.length > 0 ? (
             <div>
               <p className="bookInfoText review">Reviews: </p>
+              {selectedTab === "booksRead" && showAddReviewModal ? (
+                <AddReviewModal
+                  bookclubId={bookclubId}
+                  clickedBookId={clickedBookId}
+                  setShowAddReviewModal={setShowAddReviewModal}
+                />
+              ) : (
+                <button onClick={() => setShowAddReviewModal(true)}>
+                  Add review
+                </button>
+              )}
+
+              <br />
               {mappedReviews}
             </div>
           ) : (

@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 function Bookclubs({ getUserAxios, userInfo }) {
   let history = useHistory();
+  let mappedBookclubs;
 
   useEffect(() => {
     const loggedInUserId = localStorage.getItem("userId");
@@ -11,16 +12,14 @@ function Bookclubs({ getUserAxios, userInfo }) {
       history.push("/login");
     } else {
       getUserAxios(loggedInUserId);
-      if (userInfo.bookclubs.length === 1) {
+
+      if (userInfo.bookclubs && userInfo.bookclubs.length === 1) {
         let id = userInfo.bookclubs[0].bookclub_id;
         history.push("/bookclubs/" + id);
       }
     }
     return () => {};
   }, []);
-
-  let mappedBookclubs;
-  console.log(userInfo.bookclubs);
 
   if (userInfo.bookclubs) {
     mappedBookclubs = userInfo.bookclubs.map((club) => {
