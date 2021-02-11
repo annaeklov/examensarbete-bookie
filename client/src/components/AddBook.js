@@ -1,12 +1,20 @@
 import axios from "axios";
 
 export function AddBook(clickedBookToAdd, activeTab, selectedBookclubId) {
+  let bookCover;
+
+  if (clickedBookToAdd.volumeInfo.imageLinks) {
+    bookCover = clickedBookToAdd.volumeInfo.imageLinks.smallThumbnail;
+  } else
+    bookCover =
+      "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg";
+
   axios
     .put(`http://localhost:3000/addBook/${selectedBookclubId}`, {
       title: clickedBookToAdd.volumeInfo.title,
       author: clickedBookToAdd.volumeInfo.authors,
       genre: "no genre yet",
-      coverSrc: clickedBookToAdd.volumeInfo.imageLinks.smallThumbnail,
+      coverSrc: bookCover,
       id: clickedBookToAdd.id,
       whereToAddBook: activeTab,
     })
@@ -18,11 +26,7 @@ export function AddBook(clickedBookToAdd, activeTab, selectedBookclubId) {
     });
 }
 
-export function AddBookMove(
-  clickedBook,
-  selectedOptionMove,
-  bookclubId
-) {
+export function AddBookMove(clickedBook, selectedOptionMove, bookclubId) {
   axios
     .put(`http://localhost:3000/addBook/${bookclubId}`, {
       title: clickedBook.title,

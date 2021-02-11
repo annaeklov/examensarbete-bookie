@@ -27,7 +27,6 @@ function App() {
     axios
       .get(`http://localhost:3000/user/${loggedInUserId}`)
       .then((response) => {
-        console.log(response.data);
         setUserInfo(response.data);
       })
       .catch((error) => {
@@ -42,7 +41,7 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/user">
+        <Route  exact path="/">
           <Profile
             getUserAxios={getUserAxios}
             userInfo={userInfo}
@@ -87,7 +86,7 @@ const AppDiv = styled.main`
   width: 100vw;
   height: 100vh;
   min-height: 100vh;
-  background-color: #E3E4DB;
+  background-color: #ECECE6;
   position: absolute;
   
 `;

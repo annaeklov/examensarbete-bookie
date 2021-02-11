@@ -57,7 +57,7 @@ function BookModal({
         <button onClick={() => setShowModal(false)}>
           <GrClose />
         </button>
-        <button className="btn" onClick={() => setShowDropdown(true)}>
+        <button className="btn" onClick={() => setShowDropdown(!showDropdown)}>
           Move to...
         </button>
         {showDropdown && (
@@ -72,9 +72,59 @@ function BookModal({
             setShowModal={setShowModal}
           />
         )}
+      </TopDiv>
+      <Section>
+        {selectedTab === "booksRead" && (
+          <span className="selectedTab">In <u>have read</u>-list</span>
+        )}
+        {selectedTab === "booksToRead" && (
+          <span className="selectedTab">In <u>want to read</u>-list</span>
+        )}
+        {selectedTab === "currentlyReading" && (
+          <span className="selectedTab">In <u>currently reading</u></span>
+        )}
+        <img src={clickedBook.coverSrc} alt={clickedBook.title} />
+        <BookInfoDiv>
+          <h3 className="bookInfoText title">
+            {clickedBook.title.toUpperCase()}
+          </h3>
+          {clickedBook.author ? (
+            <h4 className="bookInfoText author">
+              -
+              {clickedBook.author.map((oneAuthor) => {
+                return oneAuthor.toUpperCase();
+              })}
+            </h4>
+          ) : (
+            <h4 className="bookInfoText author">- no author found ...</h4>
+          )}
 
+          {/*           <p className="bookInfoText genre"> {clickedBook.genre}</p>
+           */}
+          {clickedBook.reviews && (
+            <ReviewsDiv>
+              <h4 className="bookInfoText review">REVIEWS: </h4>
+              {selectedTab === "booksRead" && (
+                <>
+                  {showAddReviewModal ? (
+                    <AddReviewModal
+                      bookclubId={bookclubId}
+                      clickedBookId={clickedBookId}
+                      setShowAddReviewModal={setShowAddReviewModal}
+                    />
+                  ) : (
+                    <button onClick={() => setShowAddReviewModal(true)}>
+                      Add review
+                    </button>
+                  )}
+                </>
+              )}
+              <div className="mappedReviews">{mappedReviews}</div>
+            </ReviewsDiv>
+          )}
+        </BookInfoDiv>{" "}
         <button
-          className="btn"
+          className="delBtn"
           onClick={() => {
             onClickRemoveBook(
               bookclubId,
@@ -84,47 +134,8 @@ function BookModal({
             );
           }}
         >
-          Remove book
+          Delete book
         </button>
-      </TopDiv>
-      <Section>
-        <p>/{selectedTab}</p>
-        {clickedBook.coverSrc ? (
-          <img src={clickedBook.coverSrc} alt={clickedBook.title} />
-        ) : (
-          <img
-            src={
-              "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
-            }
-            alt={clickedBook.title}
-          />
-        )}
-        <BookInfoDiv>
-          <h3 className="bookInfoText title">{clickedBook.title}</h3>
-          <h4 className="bookInfoText author">- {clickedBook.author}</h4>
-          <p className="bookInfoText genre"> {clickedBook.genre}</p>
-          {clickedBook.reviews && clickedBook.reviews.length > 0 ? (
-            <div>
-              <p className="bookInfoText review">Reviews: </p>
-              {selectedTab === "booksRead" && showAddReviewModal ? (
-                <AddReviewModal
-                  bookclubId={bookclubId}
-                  clickedBookId={clickedBookId}
-                  setShowAddReviewModal={setShowAddReviewModal}
-                />
-              ) : (
-                <button onClick={() => setShowAddReviewModal(true)}>
-                  Add review
-                </button>
-              )}
-
-              <br />
-              {mappedReviews}
-            </div>
-          ) : (
-            <p className="bookInfoText review">No reviews yet</p>
-          )}
-        </BookInfoDiv>
       </Section>
     </ModalDiv>
   );
@@ -138,15 +149,20 @@ const BookInfoDiv = styled.div`
   .bookInfoText {
   }
   .title {
-    font-size: 35px;
-    margin: 10px 0 5px 0;
+    font-size: 16px;
+    margin: 20px 0 5px 0;
+    font-weight: 800;
   }
   .author {
     margin: 0 0 20px 5px;
+    font-weight: 200;
   }
   .genre {
     margin: 0 0 20px 5px;
     font-style: italic;
+  }
+  .review {
+    font-weight: 600;
   }
 `;
 
@@ -158,14 +174,30 @@ const ModalDiv = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #e3e4db;
+  background-color: #ecece6;
   padding: 10px;
   box-sizing: border-box;
   z-index: 1;
   overflow: auto;
+  .delBtn {
+    margin-top: 100px;
+    border: 1px solid #7f7f7c;
+    border-radius: 5px;
+    width: 79px;
+    height: 20px;
+    background-color: lightcoral;
+    font-size: 12px;
+    color: #262824;
+    box-shadow: 2px 0px 4px lightgrey;
+    align-self: flex-end;
+    :active,
+    :focus {
+      outline: none;
+    }
+  }
 `;
 const TopDiv = styled.div`
-  margin: 10px 0;
+  margin: 10px 0 0 0;
   display: flex;
   justify-content: space-between;
   button {
@@ -178,10 +210,11 @@ const TopDiv = styled.div`
     }
   }
   .btn {
-    border: 1px solid black;
+    border: 1px solid grey;
     border-radius: 5px;
     width: 60px;
     height: 40px;
+    box-shadow: 2px 0px 4px lightgrey;
     :active,
     :focus {
       outline: none;
@@ -192,9 +225,37 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
+  justify-content: space-between;
+  .selectedTab {
+    font-weight: 200;
+    margin: 10px 0px 12px 0px;
+  }
   img {
-    width: 230px;
-    height: 350px;
+    width: 180px;
+    height: 280px;
+    border-radius: 15px 0 0 10px;
+    filter: drop-shadow(4px -2px 7px grey);
+  }
+`;
+const ReviewsDiv = styled.div`
+  margin-bottom: 20px;
+  h4 {
+    margin: 5px;
+  }
+  button {
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 82px;
+    height: 23px;
+    background-color: transparent;
+    color: #262824;
+    box-shadow: 2px 0px 4px lightgrey;
+    margin-bottom: 5px;
+    :active,
+    :focus {
+      outline: none;
+    }
+  }
+  .mappedReviews {
   }
 `;

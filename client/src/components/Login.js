@@ -11,7 +11,7 @@ function Login() {
   useEffect(() => {
     const loggedInUserId = localStorage.getItem("userId");
     if (loggedInUserId) {
-      history.push("/user");
+      history.push("/");
     }
     return () => {};
   }, []);
@@ -22,7 +22,7 @@ function Login() {
       .post("http://localhost:3000/login", user)
       .then((response) => {
         localStorage.setItem("userId", response.data.userId);
-        history.push("/user");
+        history.push("/");
       })
       .catch((error) => {
         console.log(error);

@@ -7,14 +7,16 @@ function TabBar() {
   return (
     <TabBarDiv>
       <NavLink
-        to="/user"
+        exact
+        to="/"
         activeClassName="selected"
         style={style}
         activeStyle={activeStyle}
       >
         <HiOutlineUser />
-{/*         <span>profil</span>
- */}      </NavLink>
+        {/*         <span>profil</span>
+         */}{" "}
+      </NavLink>
       <NavLink
         to="/bookclubs"
         activeClassName="selected"
@@ -22,8 +24,9 @@ function TabBar() {
         activeStyle={activeStyle}
       >
         <HiOutlineUsers />
-{/*         <span>bokklubb</span>
- */}      </NavLink>
+        {/*         <span>bokklubb</span>
+         */}{" "}
+      </NavLink>
       <NavLink
         to="/search"
         activeClassName="selected"
@@ -31,8 +34,9 @@ function TabBar() {
         activeStyle={activeStyle}
       >
         <HiSearch />
-{/*         <span>sök</span>
- */}      </NavLink>
+        {/*         <span>sök</span>
+         */}{" "}
+      </NavLink>
     </TabBarDiv>
   );
 }
@@ -44,7 +48,7 @@ const TabBarDiv = styled.nav`
   background-color: white;
   position: absolute;
   bottom: 0;
-  height: 8%;
+  height: 6%;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -58,7 +62,7 @@ const TabBarDiv = styled.nav`
       font-size: 10px;
     }
     svg {
-      font-size: 30px;
+      font-size: 25px;
     }
   }
 `;

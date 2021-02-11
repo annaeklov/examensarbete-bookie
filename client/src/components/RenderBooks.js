@@ -15,15 +15,16 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
         mappedBooks = userInfo.booksRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              {book.coverSrc ? (
-                <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc !==
+              "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg" ? (
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                </ImgContainer>
               ) : (
-                <Img
-                  src={
-                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
-                  }
-                  alt={book.title}
-                />
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                  <div className="textOnImg">{book.title}</div>
+                </ImgContainer>
               )}{" "}
             </ATag>
           );
@@ -36,15 +37,16 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
         mappedBooks = userInfo.booksToRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              {book.coverSrc ? (
-                <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc !==
+              "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg" ? (
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                </ImgContainer>
               ) : (
-                <Img
-                  src={
-                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
-                  }
-                  alt={book.title}
-                />
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                  <div className="textOnImg">{book.title}</div>
+                </ImgContainer>
               )}{" "}
             </ATag>
           );
@@ -56,16 +58,17 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
         mappedBooks = userInfo.currentlyReading.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              {book.coverSrc ? (
-                <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc !==
+              "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg" ? (
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                </ImgContainer>
               ) : (
-                <Img
-                  src={
-                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
-                  }
-                  alt={book.title}
-                />
-              )}
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                  <div className="textOnImg">{book.title}</div>
+                </ImgContainer>
+              )}{" "}
             </ATag>
           );
         });
@@ -79,16 +82,17 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
         mappedBooks = bookClubInfo.booksRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              {book.coverSrc ? (
-                <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc !==
+              "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg" ? (
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                </ImgContainer>
               ) : (
-                <Img
-                  src={
-                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
-                  }
-                  alt={book.title}
-                />
-              )}
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                  <div className="textOnImg">{book.title}</div>
+                </ImgContainer>
+              )}{" "}
             </ATag>
           );
         });
@@ -99,15 +103,16 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
         mappedBooks = bookClubInfo.booksToRead.map((book, x) => {
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              {book.coverSrc ? (
-                <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc !==
+              "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg" ? (
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                </ImgContainer>
               ) : (
-                <Img
-                  src={
-                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
-                  }
-                  alt={book.title}
-                />
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                  <div className="textOnImg">{book.title}</div>
+                </ImgContainer>
               )}{" "}
             </ATag>
           );
@@ -117,17 +122,19 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
     if (bookClubInfo.currentlyReading) {
       if (selectedTab === "currentlyReading") {
         mappedBooks = bookClubInfo.currentlyReading.map((book, x) => {
+          console.log(book.coverSrc);
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
-              {book.coverSrc ? (
-                <Img src={book.coverSrc} alt={book.title} />
+              {book.coverSrc !==
+              "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg" ? (
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                </ImgContainer>
               ) : (
-                <Img
-                  src={
-                    "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
-                  }
-                  alt={book.title}
-                />
+                <ImgContainer>
+                  <Img src={book.coverSrc} alt={book.title} />
+                  <div className="textOnImg">{book.title}</div>
+                </ImgContainer>
               )}{" "}
             </ATag>
           );
@@ -144,7 +151,6 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
     setShowModal(true);
     setClickedBook(bookInfo);
   }
-
   return (
     <>
       {showModal && (
@@ -210,11 +216,32 @@ const ATag = styled.a`
   display: contents;
 `;
 
-const Img = styled.img`
-  box-sizing: border-box;
+const ImgContainer = styled.div`
+  position: relative;
+  text-align: center;
   width: 32%;
   height: 180px;
+  .textOnImg {
+    position: absolute;
+    bottom: 3px;
+    left: 8px;
+    background-color: #bcbbb5;
+    color: white;
+    text-align: center;
+    width: 88%;
+    border-radius: 0 0 0 10px;
+    
+  }
+`;
+
+const Img = styled.img`
+  box-sizing: border-box;
+  width: 94%;
+  height: 180px;
   padding: 10px 4px 4px 4px;
+  border-radius: 15px 0px 0px 10px;
+      filter: drop-shadow(4px -2px 7px grey);
+
 `;
 
 const Tabs = styled.nav`

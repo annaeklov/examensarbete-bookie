@@ -21,7 +21,7 @@ function RenderSearch({ booksArray, userInfo }) {
           ) : (
             <img
               src={
-                "https://www.brokensoulsrestored.com/wp-content/uploads/2018/07/book-cover.gif"
+                "https://i.pinimg.com/564x/e3/d7/28/e3d7285312255ce4bfb866479f0705c4.jpg"
               }
               alt={searchedBook.volumeInfo.title}
             />
@@ -51,7 +51,6 @@ function RenderSearch({ booksArray, userInfo }) {
   }
 
   function onClickAddBook(searchedBook) {
-    console.log(searchedBook);
     setShowAddModal(true);
     setClickedBookToAdd(searchedBook);
   }

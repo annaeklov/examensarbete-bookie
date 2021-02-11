@@ -34,19 +34,37 @@ function AddReviewModal({ clickedBookId, bookclubId, setShowAddReviewModal }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Username</p>
-          <input
-            name="username"
-            placeholder="Write your name"
-            onChange={handleChangeUsername}
-            value={usernameInput}
-            type="text"
-            required
-            autoFocus
-          />
-        </label>
+      <Form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            <p>Username</p>
+            <input
+              name="username"
+              placeholder="Write your name"
+              onChange={handleChangeUsername}
+              value={usernameInput}
+              type="text"
+              required
+              autoFocus
+            />
+          </label>{" "}
+          <label>
+            <p>
+              Rating: {ratingInput ? ratingInput : <span>0</span>}
+              <span>/5</span>
+            </p>
+            <input
+              name="rating"
+              onChange={handleChangeRating}
+              value={ratingInput}
+              type="range"
+              min="0"
+              max="5"
+              step="0.5"
+            />
+            <br />
+          </label>
+        </div>
         <label>
           <p>Comment</p>
           <textarea
@@ -58,25 +76,46 @@ function AddReviewModal({ clickedBookId, bookclubId, setShowAddReviewModal }) {
             required
           />
         </label>
-        <label>
-          <p>Rating (0-5)</p>
-          <input
-            name="rating"
-            onChange={handleChangeRating}
-            value={ratingInput}
-            type="range"
-            min="0"
-            max="5"
-            step="0.5"
-          />
-          <br />
-          {ratingInput ? ratingInput : <span>0</span>}
-          <span>/5</span>
-        </label>
-        <br />
-        <input type="submit" value="Add review" />
-      </form>
+        <input className="btnInForm" type="submit" value="Add review" />
+      </Form>
     </>
   );
 }
 export default AddReviewModal;
+
+const Form = styled.form`
+  display: flex;
+    border: 1px solid grey;
+  flex-direction: column;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  div {
+    display: flex;
+  }
+  label {
+    margin: 3px;
+    textarea {
+      width: 97%;
+      height: 50px;
+    }
+    p,
+    span {
+      margin: 0;
+      font-size: 14px;
+      font-variant-caps: all-small-caps;
+    }
+  }
+  .btnInForm {
+    border: 1px solid #262824;
+    border-radius: 5px;
+    width: 85px;
+    height: 25px;
+    background-color: transparent;
+    box-shadow: 2px 0px 4px lightgrey;
+    :active,
+    :focus {
+      outline: none;
+    }
+  }
+`;

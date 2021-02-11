@@ -119,7 +119,6 @@ app.put("/removeBook/:bookclubId", async (req, res) => {
   let bookclubId = req.params.bookclubId;
 
   let removeBook = { id: req.body.clickedBookId };
-  //console.log("put bookid", bookId);
 
   let whereToRemoveBook = req.body.whereToRemoveBook;
 

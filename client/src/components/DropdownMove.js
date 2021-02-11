@@ -11,7 +11,7 @@ function DropdownMove({
   bookclubId,
   setShowDropdown,
   clickedBook,
-  setShowModal
+  setShowModal,
 }) {
   let mappedOptions = options.map((option) => {
     return (
@@ -25,35 +25,69 @@ function DropdownMove({
     previousList,
     bookclubId,
     selectedOptionMove,
-    clickedBook, 
+    clickedBook,
     setShowModal
   ) {
     setShowDropdown(false);
+    //REMOVE anrop
+
+    RemoveBookMove(previousList, bookclubId, clickedBook, setShowModal);
 
     //ADD anrop
     AddBookMove(clickedBook, selectedOptionMove, bookclubId);
-
-    //REMOVE anrop
-    RemoveBookMove(previousList, bookclubId, clickedBook, setShowModal);
   }
 
   return (
-    <>
-      {mappedOptions}
+    <DropdownDiv>
+      <div className="optionsDiv">{mappedOptions}</div>
       <button
+        className="done"
         onClick={() =>
           onClickMoveBook(
             previousList,
             bookclubId,
             selectedOptionMove,
-            clickedBook, 
+            clickedBook,
             setShowModal
           )
         }
       >
         Done
       </button>
-    </>
+    </DropdownDiv>
   );
 }
 export default DropdownMove;
+
+const DropdownDiv = styled.div`
+  display: flex;
+  width: 280px;
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 5px;
+  .optionsDiv {
+    display: flex;
+    width: 80%;
+    height: 35px;
+    button {
+      width: 30%;
+      margin: 2px;
+      height: 100%;
+      :focus {
+        border-bottom: 2px solid #262824;
+        outline: none;
+        font-weight: bold;
+      }
+    }
+  }
+  .done {
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 60px;
+    height: 40px;
+    box-shadow: 2px 0px 4px lightgrey;
+    :active,
+    :focus {
+      outline: none;
+    }
+  }
+`;

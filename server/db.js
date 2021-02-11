@@ -38,7 +38,6 @@ async function getUser(userId) {
 }
 
 async function getBookclubs() {
-  console.log("inside getBookclubs");
   try {
     const result = await db.collection("bookclubsCollection").find().toArray();
 
@@ -64,8 +63,6 @@ async function getBookclub(bookclubId) {
 
 async function updateBookclub(newBook, bookclubId, whereToAddBook) {
   var $push_query = {};
-  console.log($push_query);
-
   $push_query[whereToAddBook] = newBook;
   console.log("add db", $push_query[whereToAddBook]);
 

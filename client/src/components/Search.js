@@ -52,7 +52,6 @@ function Search({ getUserAxios, userInfo }) {
         `https://www.googleapis.com/books/v1/volumes?q=${searchInputTitle}&maxResults=10`
       )
       .then((response) => {
-        console.log("book", response.data.items);
         setBooksArray(response.data.items);
       })
       .catch((error) => {

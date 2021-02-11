@@ -79,7 +79,7 @@ const BookClubInfoDiv = styled.div`
   h1 {
     font-weight: 900;
     text-align: center;
-    margin: 25px 0 15px 0;
+    margin: 35px 0 5px 0;
   }
   .meeting {
     margin: 0;
@@ -91,10 +91,13 @@ const BookClubInfoDiv = styled.div`
   }
   .membersDiv {
     display: flex;
-    width: 98%;
+    width: 50%;
     justify-content: space-evenly;
     div {
       text-align: center;
+      img {
+        opacity: 0.8;
+      }
     }
     p {
       margin: 0;
