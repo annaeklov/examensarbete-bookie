@@ -65,19 +65,25 @@ function RenderSearch({ booksArray, userInfo }) {
           userInfo={userInfo}
         />
       )}
-      {booksArray && booksArray.length >= 1 && <p>Results</p>}
+      {booksArray && booksArray.length >= 1 && <ResultsP>Results</ResultsP>}
       <Section>{mappedSearchedBooks}</Section>
     </>
   );
 }
 export default RenderSearch;
 
+const ResultsP = styled.p`
+  margin: 7px 0;
+  font-size: 20px;
+  font-variant-caps: all-small-caps;
+`;
+
 const Section = styled.section`
   box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 5px 5px 100px 5px;
+  padding: 5px 5px 80px 5px;
   overflow: auto;
   height: 80vh;
   div {
@@ -96,6 +102,8 @@ const Section = styled.section`
     p {
       margin: 3px;
       width: 40%;
+      font-size: 18px;
+      font-variant-caps: all-small-caps;
     }
     ul {
       width: 30%;
@@ -106,7 +114,8 @@ const Section = styled.section`
         span {
           position: relative;
           left: -6px;
-          font-weight: ;
+          font-size: 16px;
+          font-variant-caps: all-small-caps;
         }
       }
     }

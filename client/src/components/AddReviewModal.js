@@ -85,7 +85,7 @@ export default AddReviewModal;
 
 const Form = styled.form`
   display: flex;
-    border: 1px solid grey;
+  border: 1px solid grey;
   flex-direction: column;
   padding: 5px;
   border-radius: 3px;
@@ -95,15 +95,37 @@ const Form = styled.form`
   }
   label {
     margin: 3px;
+    input[type="text"] {
+      padding: 5px;
+      border: none;
+      border-bottom: 1px solid grey;
+      ::placeholder {
+        font-size: 12px;
+      }
+      :focus {
+        outline: none;
+      }
+    }
+    input[type="range"] {
+      :focus {
+        outline: none;
+      }
+    }
     textarea {
       width: 97%;
-      height: 50px;
+      height: 45px;
+      padding: 5px;
+      border: none;
+      border-bottom: 1px solid grey;
+      :focus {
+        outline: none;
+      }
     }
     p,
     span {
-      margin: 0;
       font-size: 14px;
       font-variant-caps: all-small-caps;
+      margin: 2px 0;
     }
   }
   .btnInForm {
