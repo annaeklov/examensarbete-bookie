@@ -55,6 +55,7 @@ function AddModal({
 
   function onClickAddTo(clickedBookToAdd, activeTab, selectedBookclubId) {
     AddBook(clickedBookToAdd, activeTab, selectedBookclubId);
+    setShowAddModal(false);
   }
 
   return (

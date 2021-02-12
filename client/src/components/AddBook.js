@@ -13,7 +13,7 @@ export function AddBook(clickedBookToAdd, activeTab, selectedBookclubId) {
     .put(`http://localhost:3000/addBook/${selectedBookclubId}`, {
       title: clickedBookToAdd.volumeInfo.title,
       author: clickedBookToAdd.volumeInfo.authors,
-      genre: "no genre yet",
+      genre: clickedBookToAdd.volumeInfo.categories,
       coverSrc: bookCover,
       id: clickedBookToAdd.id,
       whereToAddBook: activeTab,

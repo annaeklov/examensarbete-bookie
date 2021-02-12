@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -49,32 +50,104 @@ function Login() {
   }
 
   return (
-    <div className="Login">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          required
-          onChange={onChangeUsername}
-          autoFocus
-          value={username}
-        />
-        <input
-          type="password"
-          required
-          name="password"
-          placeholder="Password"
-          minLength="1"
-          onChange={onChangePassword}
-          value={password}
-        />
+    <>
+      <Form onSubmit={handleSubmit}>
+        <label>
+          {" "}
+          <p>Username</p>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+            onChange={onChangeUsername}
+            autoFocus
+            value={username}
+          />
+        </label>
+        <label>
+          {" "}
+          <p>Password</p>
+          <input
+            type="password"
+            required
+            name="password"
+            placeholder="Password"
+            minLength="1"
+            onChange={onChangePassword}
+            value={password}
+          />
+        </label>
         <input type="submit" value="Logga in" />
-      </form>
+      </Form>
       {errorMsg === "Empty" && <p>Input kan inte vara tomt</p>}
       {errorMsg === "Wrong" && <p>Användarnamn eller lösen är fel</p>}
-    </div>
+    </>
   );
 }
 
 export default Login;
+
+const Form = styled.form`
+  display: flex;
+  width: 70%;
+  flex-direction: column;
+  padding: 5px;
+  border-radius: 3px;
+  align-items: center;
+  label {
+    width: 250px;
+    p {
+      margin: 2px 0;
+      font-size: 14px;
+      font-variant-caps: all-small-caps;
+    }
+    input[type="text"] {
+      padding: 5px;
+      margin-bottom: 5px;
+      border: none;
+      border-bottom: 1px solid grey;
+      width: 100%;
+      height: 20px;
+      ::placeholder {
+        font-size: 12px;
+      }
+      :focus {
+        outline: none;
+      }
+    }
+    input[type="password"] {
+      padding: 5px;
+      margin-bottom: 5px;
+      border: none;
+      border-bottom: 1px solid grey;
+      width: 100%;
+      height: 20px;
+      ::placeholder {
+        font-size: 12px;
+      }
+      :focus {
+        outline: none;
+      }
+    }
+  }
+  span {
+    font-size: 11px;
+    font-style: italic;
+    color: grey;
+  }
+  input[type="submit"] {
+    margin: 12px 0;
+    border: 1px solid #262824;
+    border-radius: 5px;
+    width: 85px;
+    height: 25px;
+    background-color: transparent;
+    box-shadow: 2px 0px 4px lightgrey;
+
+    :active,
+    :focus {
+      outline: none;
+    }
+  }
+`;

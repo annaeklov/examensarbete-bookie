@@ -122,7 +122,6 @@ function RenderBooks({ bookClubInfo, userInfo, showModal, setShowModal }) {
     if (bookClubInfo.currentlyReading) {
       if (selectedTab === "currentlyReading") {
         mappedBooks = bookClubInfo.currentlyReading.map((book, x) => {
-          console.log(book.coverSrc);
           return (
             <ATag key={x} onClick={() => onClickATag(book)}>
               {book.coverSrc !==
@@ -230,7 +229,6 @@ const ImgContainer = styled.div`
     text-align: center;
     width: 88%;
     border-radius: 0 0 0 10px;
-    
   }
 `;
 
@@ -240,8 +238,7 @@ const Img = styled.img`
   height: 180px;
   padding: 10px 4px 4px 4px;
   border-radius: 15px 0px 0px 10px;
-      filter: drop-shadow(4px -2px 7px grey);
-
+  filter: drop-shadow(4px -2px 7px grey);
 `;
 
 const Tabs = styled.nav`

@@ -33,10 +33,13 @@ function BookModal({
     mappedReviews = clickedBook.reviews.map((review, x) => {
       if (review.username) {
         return (
-          <span key={x}>
-            "{review.comment}" - {review.username}, {review.rating}/5
-            <br />
-          </span>
+          <div className="oneReviewDiv" key={x}>
+            <blockquote>
+              {review.comment}{" "}
+              <span className="username">-{review.username} </span>
+              <span className="rating">{review.rating}/5</span>
+            </blockquote>
+          </div>
         );
       }
     });
@@ -75,13 +78,19 @@ function BookModal({
       </TopDiv>
       <Section>
         {selectedTab === "booksRead" && (
-          <span className="selectedTab">In <u>have read</u>-list</span>
+          <span className="selectedTab">
+            In <u>have read</u>-list
+          </span>
         )}
         {selectedTab === "booksToRead" && (
-          <span className="selectedTab">In <u>want to read</u>-list</span>
+          <span className="selectedTab">
+            In <u>want to read</u>-list
+          </span>
         )}
         {selectedTab === "currentlyReading" && (
-          <span className="selectedTab">In <u>currently reading</u></span>
+          <span className="selectedTab">
+            In <u>currently reading</u>
+          </span>
         )}
         <img src={clickedBook.coverSrc} alt={clickedBook.title} />
         <BookInfoDiv>
@@ -89,23 +98,34 @@ function BookModal({
             {clickedBook.title.toUpperCase()}
           </h3>
           {clickedBook.author ? (
-            <h4 className="bookInfoText author">
+            <h4 className="bookInfoText authorGenre">
               -
               {clickedBook.author.map((oneAuthor) => {
                 return oneAuthor.toUpperCase();
               })}
             </h4>
           ) : (
-            <h4 className="bookInfoText author">- no author found ...</h4>
+            <h4 className="bookInfoText authorGenre">- no author ...</h4>
+          )}
+          {clickedBook.genre ? (
+            <h4 className="bookInfoText authorGenre genre">
+              {" "}
+              {clickedBook.genre}
+            </h4>
+          ) : (
+            <h4 className="bookInfoText authorGenre genre">
+              {" "}
+              no genres ...
+            </h4>
           )}
 
-          {/*           <p className="bookInfoText genre"> {clickedBook.genre}</p>
-           */}
           {clickedBook.reviews && (
             <ReviewsDiv>
-              <h4 className="bookInfoText review">REVIEWS: </h4>
+              <h4 className="bookInfoText review">REVIEWS</h4>
               {selectedTab === "booksRead" && (
                 <>
+                  {" "}
+                  <div className="mappedReviewsDiv">{mappedReviews}</div>
                   {showAddReviewModal ? (
                     <AddReviewModal
                       bookclubId={bookclubId}
@@ -119,7 +139,6 @@ function BookModal({
                   )}
                 </>
               )}
-              <div className="mappedReviews">{mappedReviews}</div>
             </ReviewsDiv>
           )}
         </BookInfoDiv>{" "}
@@ -142,6 +161,62 @@ function BookModal({
 }
 export default BookModal;
 
+const ReviewsDiv = styled.div`
+  margin-bottom: 20px;
+  h4 {
+    margin: 5px;
+  }
+  button {
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 82px;
+    height: 23px;
+    background-color: transparent;
+    color: #262824;
+    box-shadow: 2px 0px 4px lightgrey;
+    margin-bottom: 5px;
+    :active,
+    :focus {
+      outline: none;
+    }
+  }
+  .mappedReviewsDiv {
+    @import url("https://fonts.googleapis.com/css2?family=PT+Mono&display=swap");
+    font-family: "PT Mono", monospace;
+    width: 100%;
+    padding: 3px;
+    .oneReviewDiv {
+      border: 1 solid red;
+      width: 100%;
+      margin: 5px;
+      blockquote {
+        font-size: 16px;
+        position: relative;
+        margin: 0;
+        padding: 16px;
+        text-transform: lowercase;
+        :after {
+          position: absolute;
+          color: lightgrey;
+          font-size: 60px;
+          width: 30px;
+          height: 30px;
+          content: "“";
+          left: -8px;
+          top: -6px;
+        }
+      }
+      .username {
+        font-size: small;
+        font-style: italic;
+      }
+      .rating {
+        font-size: small;
+      }
+    }
+  }
+`;
+
 const BookInfoDiv = styled.div`
   width: 90%;
   display: flex;
@@ -153,12 +228,12 @@ const BookInfoDiv = styled.div`
     margin: 20px 0 5px 0;
     font-weight: 800;
   }
-  .author {
-    margin: 0 0 20px 5px;
+  .authorGenre {
+    margin: 0 0 10px 5px;
     font-weight: 200;
   }
   .genre {
-    margin: 0 0 20px 5px;
+    margin: 0 0 16px 12px;
     font-style: italic;
   }
   .review {
@@ -235,27 +310,5 @@ const Section = styled.section`
     height: 280px;
     border-radius: 15px 0 0 10px;
     filter: drop-shadow(4px -2px 7px grey);
-  }
-`;
-const ReviewsDiv = styled.div`
-  margin-bottom: 20px;
-  h4 {
-    margin: 5px;
-  }
-  button {
-    border: 1px solid grey;
-    border-radius: 5px;
-    width: 82px;
-    height: 23px;
-    background-color: transparent;
-    color: #262824;
-    box-shadow: 2px 0px 4px lightgrey;
-    margin-bottom: 5px;
-    :active,
-    :focus {
-      outline: none;
-    }
-  }
-  .mappedReviews {
   }
 `;
