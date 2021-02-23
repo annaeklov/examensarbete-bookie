@@ -73,7 +73,6 @@ function AddReviewModal({ clickedBookId, bookclubId, setShowAddReviewModal }) {
             onChange={handleChangeComment}
             value={commentInput}
             type="text"
-            required
           />
         </label>
         <input className="btnInForm" type="submit" value="Add review" />
